@@ -3,7 +3,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 	
@@ -38,19 +38,31 @@ if(isset($_POST['pesquisar']))
 	
 	if (array_key_exists('pesquisar', $_POST))
 	{
-		$s = $_POST["idFunc"];		
+		$id = $_POST["idFunc"];		
 	}
 	else
 	{
-		$s = "";			
+		$id= "";			
 	} 
 
-	$sql = "SELECT id_Func, nome, morada, telefone, email, nif, dataNasc, dataEntrada FROM func WHERE id_Func LIKE '%$id%'";
+	if($id == null)
+	{
+		$sql = "SELECT id_funcionario, nome, morada, telefone, nif, email, data_nascimento, data_entrada 
+		FROM funcionarios 
+		ORDER BY id_funcionario";
+	}
+	else
+	{
+		$sql = "SELECT id_funcionario, nome, morada, telefone, nif, email, data_nascimento, data_entrada 
+		FROM funcionarios 
+		WHERE id_funcionario = '$id'";
+	}
 
-	if ($stmt = $con->prepare($sql)) 
+
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
-		$stmt->bind_result($id, $nome, $morada, $telefone, $email, $nif, $dataN, $dataE);
+		$stmt->bind_result($id, $nome, $morada, $telefone, $nif, $morada, $dataN, $dataE);
 
 		echo "<br><br><br>";
 
@@ -67,8 +79,8 @@ if(isset($_POST['pesquisar']))
 			echo "<td> <p class='label'> $nome </p> </td> ";
 			echo "<td> <p class='label'> $morada </p> </td> ";
 			echo "<td> <p class='label'> $telefone </p> </td>";
-			echo "<td> <p class='label'> $email </p> </td> ";
 			echo "<td> <p class='label'> $nif </p> </td> ";
+			echo "<td> <p class='label'> $email </p> </td> ";
 			echo "<td> <p class='label'> $dataN </p> </td> ";
 			echo "<td> <p class='label'> $dataE </p> </td> ";
 			echo "<td class='img'> <a href='editarFunc.php?id=$id&nome=$nome&morada=$morada&telefone=$telefone&email=$email&nif=$nif&dataN=$dataN&dataE=$dataE'> <img src='../imagens/edit.png' title='Editar Funcionário'> </a> </td> ";
@@ -80,7 +92,7 @@ if(isset($_POST['pesquisar']))
 		$stmt->close();
 	}
 }
-$con->close();
+$mysqli->close();
 ?>
 
 	</div>

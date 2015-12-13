@@ -28,18 +28,19 @@
 	{
 
 		$id = mysqli_insert_id();
+		$nif = mysqli_real_escape_string($mysqli, $_POST["nif"]);
 		$nome = mysqli_real_escape_string($mysqli, $_POST["nome"]); 
 		$morada = mysqli_real_escape_string($mysqli, $_POST["morada"]);
 		$telefone = mysqli_real_escape_string($mysqli, $_POST["telefone"]);
 		$email = mysqli_real_escape_string($mysqli, $_POST["email"]);
-		$nif = mysqli_real_escape_string($mysqli, $_POST["nif"]);
+
 
 		//Verifica se existe um cliente com o mesmo nome e nif na tabela clientes, antes de adicionar.
 		$checkn = "SELECT * FROM clientes WHERE nome='$nome' AND nif='$nif'";
 		$sqlcheckn = mysqli_query($checkn);
 		if($sqlcheckn == 0)
 		{
-			$sql = "INSERT INTO clientes VALUES ('$id', '$nome', '$morada', '$telefone', '$email', '$nif')";
+			$sql = "INSERT INTO clientes VALUES ('','$nif','$nome', '$morada', '$telefone', '$email')";
 
 			if (mysqli_multi_query($mysqli, $sql))
 			{
@@ -107,23 +108,13 @@
 			<form action="adicionarCliente.php" method="POST">
 
 				<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Adicionar novo Cliente </h2> </td> </tr>
-
-				 
-
 		    	<tr> <td> <p class="label"> Nome: </p> </td> 		<td> <p> <input type="text" name="nome" class="selected"> </p> </td> </tr>
-
 		        <tr> <td> <p class="label"> Morada: </p> </td> 		<td> <p> <input type="text" name="morada" class="selected"> </p> </td> </tr>
-
 		        <tr> <td> <p class="label"> Telefone: </p> </td> 	<td> <p> <input type="text" name="telefone" class="selected" maxlength="9"> </p> </td> </tr>
-
 				<tr> <td> <p class="label"> E-mail: </p> </td> 		<td> <p> <input type="text" name="email" class="selected"> </p> </td> </tr>
-
 		    	<tr> <td> <p class="label"> NIF: </p> </td>			<td> <p> <input type="text" name="nif" class="selected" maxlength="9"> </p> </td> </tr>
 
-				 
-
 				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="Adicionar"> </td>
-
 			</form>
 
 		</table>

@@ -69,12 +69,12 @@ if(isset($_POST['pesquisar']))
 
 	if($id == null)
 	{
-		$sql = "SELECT id_Cliente, nomeCliente, moradaCliente, telefoneCliente, emailCliente, nifCliente 
+		$sql = "SELECT id_Cliente, nome, morada, telefone, email, nif 
 				FROM clientes ORDER BY id_Cliente";
 	}
 	else
 	{
-		$sql = "SELECT id_Cliente, nomeCliente, moradaCliente, telefoneCliente, emailCliente, nifCliente 
+		$sql = "SELECT id_Cliente, nome, morada, telefone, email, nif
 				FROM clientes 
 				WHERE id_Cliente = '$id'";
 	}
@@ -92,7 +92,6 @@ if(isset($_POST['pesquisar']))
 		echo "<tr bgcolor='#c1c1ff' text-align='center'> <td> <h2> ID Cliente </h2> </td> <td> <h2> Nome Cliente </h2> </td> <td> <h2> Morada </h2> </td> <td> <h2> Telefone </h2> </td> <td> <h2> E-mail </h2> </td> <td> <h2> NIF </h2> </td> <td colspan='2'> </td> </tr>";
 		echo "<tr>";
 
-		$offset_count = 0;
 
 		while ($stmt->fetch()) 
 		{
@@ -113,19 +112,8 @@ if(isset($_POST['pesquisar']))
 
 		}
 
-		/*echo "THIS IS OFFSET_COUNT ".$offset_count;
-
-		if($offset_count == 0)
-		{
-			$_SESSION['offset'] = $_SESSION['offset'] - 10;
-
-			//echo $_SESSION['offset'];
-		}*/
 		echo "</table>";
-
 		echo "<br><br><br>";
-
-
 
 		$stmt->close();
 

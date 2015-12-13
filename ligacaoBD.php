@@ -1,9 +1,10 @@
 <?php
 
-	$servername = "sql300.byethost7.com";
-	$username = "b7_15612799";
-	$password = "0hk2nsxg";
-	$dbname = "b7_15612799_inforshop";
+	$servername = "inforzen.com";
+	$username = "inforshop";
+	$password = "123BangBang+";
+	$dbname = "inforshop";
+	$port = "7575";
 
 	/*$servername = "127.0.0.1";
 	$username = "root";

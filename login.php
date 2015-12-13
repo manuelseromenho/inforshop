@@ -43,7 +43,8 @@
 					if($pass_post == $pass_)
 					{
 						$_SESSION['user'] = $user_;
-						echo "<script> alert('Sucesso ao fazer login.');window.location.href='index.php';</script>";	
+						//echo "<script> alert('Sucesso ao fazer login.');window.location.href='index.php';</script>";
+						echo "<script>window.location.href='index.php';</script>";	
 					}
 				}
 				exit();

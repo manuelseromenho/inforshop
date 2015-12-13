@@ -25,7 +25,6 @@
 	<div class="container">
 <?php
 	$id = $_GET["id"];
-	$con=$mysqli;
 	$sql = "DELETE FROM clientes WHERE id_Cliente='$id'";
 	if ($stmt = $con->prepare($sql)) 
 	{
@@ -35,10 +34,10 @@
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 	</div>
 	<!-- ****************** FOOTER *************** -->

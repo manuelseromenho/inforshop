@@ -21,7 +21,7 @@
 		$nif = $_POST['nif'];
 
 		//$sql = mysqli_query($mysqli, "UPDATE clientes SET nomeCliente='$nome', moradaCliente='$morada', telefoneCliente='$telefone', emailCliente='$email', nifCliente='$nif' WHERE id_Cliente='$id'");
-		$sql = "UPDATE cliente SET nomeCliente='$nome', moradaCliente='$morada', telefoneCliente='$telefone', emailCliente='$email', nifCliente='$nif' WHERE id_Cliente='$id'";
+		$sql = "UPDATE cliente SET nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif' WHERE id_Cliente='$id'";
 
 		
 		
