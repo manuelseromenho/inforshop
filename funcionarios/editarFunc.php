@@ -1,13 +1,12 @@
 <?php 
+	require("../ligacaoBD.php");
 	session_start(); /* Starts the session */
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
-
-	require("../ligacaoBD.php");
 
 	if(isset($_POST['editar']))
 	{
@@ -20,11 +19,16 @@
 		$dataN = $_POST['dataN'];
 		$dataE = $_POST['dataE'];
 
-		$sql = mysqli_query($con, "UPDATE func SET id_Func='$id', nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif', dataNasc='$dataN', dataEntrada='$dataE' WHERE id_Func='$id'");
+		$sql = "UPDATE funcionarios SET id_funcionario='$id', nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif', data_nascimento='$dataN', data_entrada='$dataE' WHERE id_funcionario='$id'";
 
-		if ($stmt = $con->prepare($sql)) 
+		if ($mysqli->query($sql) === TRUE) 
 		{
-			$stmt->execute();
+			echo "<script> alert('Cliente editado com sucesso!') </script>";
+			echo "<script type=\"text/javascript\"> 
+				       window.location=\"sucesso.php\";
+				  </script>";
+
+			/*$stmt->execute();
 			$stmt->bind_result($id, $nome, $morada, $telefone, $email, $nif, $dataN, $dataE);
 
 			while ($stmt->fetch()) 
@@ -32,10 +36,17 @@
 				echo "<h2>Funcionário alterado com sucesso!</h2>";
 			}
 			echo "<h2>Funcionário alterado com sucesso!</h2>";
-			$stmt->close();
+			$stmt->close();*/
+		}
+		else
+		{
+			"<script type=\"text/javascript\">
+				alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\");
+			</script>";
+
 		}
 	}
-	mysqli_close($con);
+	mysqli_close($mysqli);
 ?>
 
 <html>
@@ -54,7 +65,7 @@
 	<form action="editarFunc.php" method="POST">
 		<tr bgcolor="#c1c1ff"> <td colspan="3"> <h2> Editar um Funcionário </h2> </td> </tr>
 	 	
-	 	<tr> <td> <p class="label"> ID Funcionário: </p> </td> 	<td> <p> <input type="text" name="id" value="<?php $id=$_GET['id']; echo $id; ?>" class="input" maxlength="4"> </p> </td> </tr>
+	 	<tr> <td> <p class="label"> ID Funcionário: </p> </td> 	<td> <p> <input type="text" name="id" value="<?php $id=$_GET['id']; echo $id; ?>" class="input" maxlength="4" readonly="readonly"> </p> </td> </tr>
     	<tr> <td> <p class="label"> Nome: </p> </td> 		<td> <p> <input type="text" name="nome" value="<?php $nome=$_GET['nome']; echo $nome; ?>" class="input"> </p> </td> </tr>
        	<tr> <td> <p class="label"> Morada: </p> </td> 		<td> <p> <input type="text" name="morada" value="<?php $morada=$_GET['morada']; echo $morada; ?>" class="input"> </p> </td> </tr>
        	<tr> <td> <p class="label"> Telefone: </p> </td> 	<td> <p> <input type="text" name="telefone" value="<?php $telefone=$_GET['telefone']; echo $telefone; ?>" maxlength="9" class="input"> </p> </td> </tr>

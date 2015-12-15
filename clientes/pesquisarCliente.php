@@ -1,6 +1,5 @@
 <?php 
 	session_start(); /* Starts the session */
-
 	if(!isset($_SESSION['user']))
 	{
 		header("location:../login.php");
@@ -9,44 +8,26 @@
 	require("../ligacaoBD.php");
 ?>
 
-
-
 <html>
-
 <head>
-
 	<title> INFORSHOP </title>
-
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
-
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
-
 	<meta charset="utf-8">  
-
 </head>
 
 <body>
-
 	<!-- ************ HEADER ************** -->
-
 	<?php include("header.php"); ?>
-
 	<!-- ***************** BODY *****************-->
-
 	<div class="container">
-
 	<table class="procura">
 
-	<form action="pesquisarCliente.php" method="POST">
-
-		<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Pesquisa de Clientes </h2> </td> </tr>
-
-		<tr> <td> <p class="form"> ID do Cliente: </p> </td> <td> <p> <input type="text" name="idCliente" class="selected"> </p> </td> </tr>
-
-		<tr bgcolor="#c1c1ff">  <td colspan="2"> <input type="submit" value="Pesquisar" name="pesquisar" class="button"> </td> </tr>
-		
-	</form>
-
+		<form action="pesquisarCliente.php" method="POST">
+			<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Pesquisa de Clientes </h2> </td> </tr>
+			<tr> <td> <p class="form"> ID do Cliente: </p> </td> <td> <p> <input type="text" name="idCliente" class="selected"> </p> </td> </tr>
+			<tr bgcolor="#c1c1ff">  <td colspan="2"> <input type="submit" value="Pesquisar" name="pesquisar" class="button"> </td> </tr>
+		</form>
 	</table>
 
 

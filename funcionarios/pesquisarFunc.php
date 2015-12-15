@@ -25,7 +25,10 @@
 	<table class="procura">
 		<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Pesquisa de Funcionários </h2> </td> </tr>
 		<form action="pesquisarFunc.php" method="POST">
-			<tr> <td> <p class="form"> ID do Funcionário: </p> </td> <td> <p> <input type="text" name="idFunc" class="selected"> </p> </td> </tr>
+			<tr> 
+				<td> <p class="form"> ID do Funcionário: </p> </td> 
+				<td> <p> <input type="text" name="idFunc" class="selected"> </p> </td> 
+			</tr>
 			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" value="Pesquisar" name="pesquisar" class="button"> </td> </tr>
 		</form>
 	</table>
@@ -62,12 +65,12 @@ if(isset($_POST['pesquisar']))
 	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
-		$stmt->bind_result($id, $nome, $morada, $telefone, $nif, $morada, $dataN, $dataE);
+		$stmt->bind_result($id, $nome, $morada, $telefone, $nif, $email, $dataN, $dataE);
 
 		echo "<br><br><br>";
 
 		echo "<table class='table'>";
-		echo "<tr bgcolor='#c1c1ff' text-align='center'> <td> <h2> ID </h2> </td> <td> <h2> Nome Funcionário </h2> </td> <td> <h2> Morada </h2> </td> <td> <h2> Telefone </h2> </td> <td> <h2> E-mail </h2> </td> <td> <h2> NIF </h2> </td> <td> <h2> Data Nascimento </h2> </td> <td> <h2> Data Entrada Serviço </h2> </td> <td colspan='2'> </td> </tr>";
+		echo "<tr bgcolor='#c1c1ff' text-align='center'> <td> <h2> ID </h2> </td> <td> <h2> Nome Funcionário </h2> </td> <td> <h2> Morada </h2> </td> <td> <h2> Telefone </h2> </td> <td> <h2> NIF </h2> </td> <td> <h2> E-MAIL </h2> </td> <td> <h2> Data Nascimento </h2> </td> <td> <h2> Data Entrada Serviço </h2> </td> <td colspan='2'> </td> </tr>";
 		echo "<tr>";
 
 		while ($stmt->fetch()) 

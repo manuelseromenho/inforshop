@@ -26,7 +26,7 @@
 <?php
 	$id = $_GET["id"];
 	$sql = "DELETE FROM clientes WHERE id_Cliente='$id'";
-	if ($stmt = $con->prepare($sql)) 
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
 		$stmt->close(); // close statement

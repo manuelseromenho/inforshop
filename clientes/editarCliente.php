@@ -8,8 +8,6 @@
 		exit;
 	}
 	
-	//$con=$mysqli;
-
 	if(isset($_POST['editar']))
 	{
 
@@ -22,11 +20,9 @@
 
 		//$sql = mysqli_query($mysqli, "UPDATE clientes SET nomeCliente='$nome', moradaCliente='$morada', telefoneCliente='$telefone', emailCliente='$email', nifCliente='$nif' WHERE id_Cliente='$id'");
 		$sql = "UPDATE cliente SET nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif' WHERE id_Cliente='$id'";
-
-		
 		
 		if ($mysqli->query($sql) === TRUE)
-			{
+		{
 				echo "<script> alert('Cliente editado com sucesso!') </script>";
 
 				//$sql_novo_cliente = "SELECT * FROM clientes ORDER BY id_Cliente DESC LIMIT 1";
@@ -49,14 +45,14 @@
 				//{
 				//    echo "<script> alert('Impossivel inserir este registo. TENTE DE NOVO.'); </script>";
 				//}
-			}
-			else
-			{
-				"<script type=\"text/javascript\">
-					alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\");
-				</script>";
+		}
+		else
+		{
+			"<script type=\"text/javascript\">
+				alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\");
+			</script>";
 
-			}
+		}
 
 
 

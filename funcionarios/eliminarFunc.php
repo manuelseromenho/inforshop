@@ -24,8 +24,8 @@
 <?php
 	$id = $_GET["id"];
 	
-	$sql = "DELETE FROM func WHERE id_Func='$id'";
-	if ($stmt = $con->prepare($sql)) 
+	$sql = "DELETE FROM funcionarios WHERE id_funcionario='$id'";
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
 		$stmt->close(); // close statement
@@ -33,10 +33,10 @@
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 	</div>
 	<!-- ****************** FOOTER *************** -->

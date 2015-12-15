@@ -38,6 +38,8 @@
 		//Verifica se existe um cliente com o mesmo nome e nif na tabela clientes, antes de adicionar.
 		$checkn = "SELECT * FROM clientes WHERE nome='$nome' AND nif='$nif'";
 		$sqlcheckn = mysqli_query($checkn);
+
+		
 		if($sqlcheckn == 0)
 		{
 			$sql = "INSERT INTO clientes VALUES ('','$nif','$nome', '$morada', '$telefone', '$email')";

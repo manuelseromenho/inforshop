@@ -3,7 +3,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 
@@ -23,23 +23,9 @@
 	?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
-<?php
-	$id = $_GET["id"];
-	
-	$sql = "DELETE FROM clientes WHERE id_Cliente='$id'";
-	if ($stmt = $con->prepare($sql)) 
-	{
-		$stmt->execute();
-		$stmt->close(); // close statement
-		echo ("<h2>Cliente eliminado com sucesso!</h2>");
-	}
-	else
-	{ 
-		echo mysqli_error ($con);
-	}
 
-	$con->close(); //close connection
-?>
+	<h2>Funcionário adicionado/editado com sucesso!</h2>
+
 	</div>
 	<!-- ****************** FOOTER *************** -->
 	<?php include("footer.php"); ?>
