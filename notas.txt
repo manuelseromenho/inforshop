@@ -1,0 +1,32 @@
+
+php client_id, data_php=>'2015-', 
+
+create procedure insere_assistencia()
+BEGIN COMMIT;
+
+//DECLARE ULTIMA_ASSISTENCIA INTEGER;
+
+insert into Assistencia(...) values(...);
+=>assistencia_id
+
+//insert into ULTIMA_ASSISTENCIA
+//select max(assistencia_id) from Assistencia;
+
+// operadores de agregacao
+max, min, avg, sum, count
+max = maximo
+min = menor
+avg = valor médio
+sum = somatório
+count = contagem (quantida de linhas)
+
+insert into AssistenciaProdutos() values(... ,ULTIMA_ASSISTENCIA, ...)
+from Assistencia
+WHERE 
+=>
+
+update Produtos set total=
+from AssistenciaProdutos
+where produto_id=
+
+END COMMIT;
