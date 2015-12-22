@@ -29,7 +29,7 @@
 				<td> <p class="form"> ID do Funcionário: </p> </td> 
 				<td> <p> <input type="text" name="idFunc" class="selected"> </p> </td> 
 			</tr>
-			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" value="Pesquisar" name="pesquisar" class="button"> </td> </tr>
+			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" value="pesquisar" name="pesquisar" class="button"> </td> </tr>
 		</form>
 	</table>
 
@@ -37,7 +37,7 @@
 
 if(isset($_POST['pesquisar']))
 {
-	$id = $_POST["idFunc"];
+	//$id = $_POST["idFunc"];
 	
 	if (array_key_exists('pesquisar', $_POST))
 	{

@@ -40,7 +40,7 @@
 		}
 		else
 		{
-			"<script type=\"text/javascript\">
+			echo "<script type=\"text/javascript\">
 				alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\");
 			</script>";
 

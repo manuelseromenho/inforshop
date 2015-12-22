@@ -22,32 +22,32 @@
 <!-- ************ HEADER ************** -->
 	<?php include("header.php"); ?>
 <!-- ***************** BODY *****************-->
-<div class="container">
+	<div class="container">
 
-		<table>
-			<form action="adicionarFunc1.php" method="POST">
-				<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Adicionar Novo Funcionário </h2> </td> </tr>
-				 
+			<table>
+				<form action="adicionarFunc1.php" method="POST">
+					<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Adicionar Novo Funcionário </h2> </td> </tr>
+					 
 
 
-				<tr> <td> <p class="label"> Nome: </p> </td> 					<td> <p> <input type="text" name="nome" class="input"> </p> </td> </tr>
-		        <tr> <td> <p class="label"> Morada: </p> </td> 					<td> <p> <input type="text" name="morada" class="input"> </p> </td> </tr>
-		        <tr> <td> <p class="label"> Telefone: </p> </td> 				<td> <p> <input type="text" name="telefone" class="input" maxlength="9"> </p> </td> </tr>
-		    	<tr> <td> <p class="label"> NIF: </p> </td>						<td> <p> <input type="text" name="nif" class="input" maxlength="9"> </p> </td> </tr>
-		    	<tr> <td> <p class="label"> E-mail: </p> </td> 					<td> <p> <input type="text" name="email" class="input"> </p> </td> </tr>
-		    	<tr> <td> <p class="label"> Data Nascimento: </p> </td>			<td> <p> <input type="date" name="dataN" class="input"> </p> </td> </tr>
-		    	<tr> <td> <p class="label"> Data Entrada ao Serviço: </p> </td>	<td> <p> <input type="date" name="dataE" class="input"> </p> </td> </tr>
-			
+					<tr> <td> <p class="label"> Nome: </p> </td> 					<td> <p> <input type="text" name="nome" class="input"> </p> </td> </tr>
+			        <tr> <td> <p class="label"> Morada: </p> </td> 					<td> <p> <input type="text" name="morada" class="input"> </p> </td> </tr>
+			        <tr> <td> <p class="label"> Telefone: </p> </td> 				<td> <p> <input type="text" name="telefone" class="input" maxlength="9"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> NIF: </p> </td>						<td> <p> <input type="text" name="nif" class="input" maxlength="9"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> E-mail: </p> </td> 					<td> <p> <input type="text" name="email" class="input"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> Data Nascimento: </p> </td>			<td> <p> <input type="date" name="dataN" class="input"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> Data Entrada ao Serviço: </p> </td>	<td> <p> <input type="date" name="dataE" class="input"> </p> </td> </tr>
+				
 
-				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="adicionar"> </td>
-			</form>
-		</table>
-	</div>
+					<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="adicionar"> </td>
+				</form>
+			</table>
+	
 	
 	
 
 <!-- ****************** FOOTER *************** -->
-	<?php include("footer.php"); ?>
+
 	
 <?php
 
@@ -68,18 +68,47 @@
 						data_nascimento = ?, 
 						data_entrada = ?";
 
-			if($_POST['nome'] == '')
-				$nome = "NULL";
-			else
-				$nome = $_POST['nome'];
+			
+			
+			//VERIFICAÇÃO DA INTRODUÇÃO DE VALORES NULOS NO FORMULARIO
+			if($_POST['nome'] == '') 
+			{
+				$nome = null;
+				echo "Nome não pode estar vazio";
+			}
+			else $nome = $_POST['nome'];
+
+			if($_POST['morada'] == '') 
+			{
+				$morada = null;
+				echo "Morada não pode estar vazio";
+
+			}
+			else $morada = $_POST['morada'];
+
+			if($_POST['telefone'] == '')
+			{
+				$telefone = null;
+				echo "Telefone não pode estar vazio')";
+			}
+			else $telefone = $_POST['telefone'];
+
+			if($_POST['nif'] == '')
+			{
+				$nif = null;
+				echo "alert('NIF não pode estar vazio')";
+			}
+			else $nif = $_POST['nif'];
+
+
 
 			if ($stmt = $mysqli->prepare($sql))
 			{
 				$stmt->bind_param('sssssss'
 				, $nome
-				, $_POST['morada']
-				, $_POST['telefone']
-				, $_POST['nif']
+				, $morada
+				, $telefone
+				, $nif
 				, $_POST['email']
 				, $_POST['data_nascimento']
 				, $_POST['data_entrada']
@@ -123,7 +152,7 @@
  	$mysqli->close();
 ?>
 
-
-
+		</div>
+		<?php include("footer.php"); ?>
 </body>
 </html>
