@@ -27,7 +27,7 @@
 	$idM = $_GET["idM"];
 	
 	$sql = "DELETE FROM marcas WHERE id_Marca='$idM'";
-	if ($stmt = $con->prepare($sql)) 
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
 		$stmt->close(); // close statement
@@ -35,10 +35,10 @@
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 
 		</div>

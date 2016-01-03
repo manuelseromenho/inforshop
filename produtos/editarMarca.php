@@ -14,9 +14,9 @@
 		$idM = $_POST['idMarca'];
 		$marca = $_POST['marca'];
 
-		$sql = mysqli_query($con, "UPDATE marcas SET id_Marca='$idM', marca='$marca' WHERE id_Marca='$idM'");
+		$sql = mysqli_query($mysqli, "UPDATE marcas SET id_Marca='$idM', marca='$marca' WHERE id_Marca='$idM'");
 
-		if ($stmt = $con->prepare($sql)) 
+		if ($stmt = $mysqli->prepare($sql)) 
 		{
 			$stmt->execute();
 			$stmt->bind_result($idM, $marca);
@@ -30,7 +30,7 @@
 		}
 	}
 	
-	mysqli_close($con);
+	mysqli_close($mysqli);
 
 ?>
 

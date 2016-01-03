@@ -16,9 +16,9 @@
 		$idC = $_POST['idCategoria'];
 
 
-		$sql = mysqli_query($con, "UPDATE subcategorias SET id_Subcategoria='$idSub', subcategoria='$sub', id_Categoria='$idC' WHERE id_Subcategoria='$idSub'");
+		$sql = mysqli_query($mysqli, "UPDATE subcategorias SET id_Subcategoria='$idSub', subcategoria='$sub', id_Categoria='$idC' WHERE id_Subcategoria='$idSub'");
 
-		if ($stmt = $con->prepare($sql)) 
+		if ($stmt = $mysqli->prepare($sql)) 
 		{
 			$stmt->execute();
 			$stmt->bind_result($idSub, $sub, $idC);
@@ -32,7 +32,7 @@
 		}
 	}
 	
-	mysqli_close($con);
+	mysqli_close($mysqli);
 
 ?>
 

@@ -8,7 +8,6 @@
 		header("location:../login.php");
 		exit;
 	}
-	$con = $mysqli;
 
 ?>
 <html>
@@ -18,48 +17,51 @@
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
 	<meta charset='utf-8'>  
 	<script>
+		function showCat(str) //str é o id que vem da escolha na combobox
+		{
+		   // alert(str);
 
-	function showCat(str) //str é o id que vem da escolha na combobox
-	{
-	   // alert(str);
-
-	    if (str == "") 
-	    {
-	        document.getElementById("txtHint").innerHTML = "";
-	        return;
-	    } 
-	    else 
-	    { 
-	        if (window.XMLHttpRequest) 
-	        {
-	            // code for IE7+, Firefox, Chrome, Opera, Safari
-	            xmlhttp = new XMLHttpRequest();
-	        } 
-	        else 
-	        {
-	            // code for IE6, IE5
-	            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	        }
-	        xmlhttp.onreadystatechange = function() 
-	        {
-	        	
-	            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-	            {
-	                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-	            }
-	        };
-	        xmlhttp.open("GET","getcat.php?idC="+str,true);
-	        xmlhttp.send();
-	    }
-	}
-
-	
-
+		    if (str == "") 
+		    {
+		        document.getElementById("txtHint").innerHTML = "";
+		        return;
+		    } 
+		    else 
+		    { 
+		        if (window.XMLHttpRequest) 
+		        {
+		            // code for IE7+, Firefox, Chrome, Opera, Safari
+		            xmlhttp = new XMLHttpRequest();
+		        } 
+		        else 
+		        {
+		            // code for IE6, IE5
+		            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		        }
+		        xmlhttp.onreadystatechange = function() 
+		        {
+		        	
+		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		            {
+		                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+		            }
+		        };
+		        xmlhttp.open("GET","getcat.php?idC="+str,true);
+		        xmlhttp.send();
+		    }
+		}
 	</script>
 </head>
 <body>
 	
-<?php
+
+
+	<!-- ************ HEADER ************** -->
+	<?php include("header.php"); ?>
+	<!-- ***************** BODY *****************-->
+	<div class="container">
+
+	<?php
 	
 	$select = "SELECT * FROM produtos";
 
@@ -86,7 +88,6 @@
 			'$peso', 
 			'$quantidade', 
 			'$preco',
-			/*'$idCat' */
 			'$idSub', 
 			'$idM')";
 				
@@ -106,9 +107,15 @@
 		    	// output data of each row
 			    while($row = $result->fetch_assoc()) 
 			    {
-					//echo $row["id_produto"];
-			      	echo "<script> alert(\"ID Produto: ".$row["id_produto"].". Descrição Produto: " .$row["nome_produto"]. "\");</script>";
+			      	//echo "<script> alert(\"ID Produto: ".$row["id_produto"].". Descrição Produto: " .$row["nome_produto"]. "\");</script>";
+			      	//echo "<script type=\"text/javascript\"> 
+				       					//window.location=\"sucesso.php\";
+				       		// </script>";
+
+				   
 			    }
+			    		echo ("<h2> Produto Adicionado com sucesso! </h2>");
+			    		echo ("<script>document.getElementById('add_prod_table').style.visibility='false'</script>");
 			    $result->close();
 			} 
 			else 
@@ -124,12 +131,7 @@
 	}
 
 ?>
-
-	<!-- ************ HEADER ************** -->
-	<?php include("header.php"); ?>
-	<!-- ***************** BODY *****************-->
-	<div class="container">
-	<table class="procura">
+	<table class="procura" id="add_prod_table" name="add_prod_table">
 	<form action="adicionarProduto.php" method="POST">
 		<tr bgcolor="#c1c1ff"> 
 			<td colspan="2"> 
@@ -154,7 +156,7 @@
 							FROM categorias 
 							ORDER BY id_categoria ASC";
 					
-					if ($smtp = $con->prepare($sql))
+					if ($smtp = $mysqli->prepare($sql))
 					{
 						$smtp->execute();						
 						$smtp->bind_result($idCat, $cat);
@@ -190,7 +192,7 @@
 		$sql = "SELECT id_Marca, marca 
 				FROM marcas";
 		
-		if ($smtp = $con->prepare($sql))
+		if ($smtp = $mysqli->prepare($sql))
 		{
 			$smtp->execute();						
 			$smtp->bind_result($idM, $marca);

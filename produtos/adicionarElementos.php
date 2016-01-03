@@ -51,7 +51,7 @@
 	//$sql = "SELECT id_Subcategoria, subcategoria, id_Categoria FROM subcategorias";
 	$sql = "SELECT id_Categoria, categoria FROM categorias";
 	
-	if ($smtp = $con->prepare($sql))
+	if ($smtp = $mysqli->prepare($sql))
 	{
 		$smtp->execute();						
 		$smtp->bind_result($idC, $categoria);

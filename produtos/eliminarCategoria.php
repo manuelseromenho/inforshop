@@ -27,7 +27,7 @@
 	$idC = $_GET["idC"];
 	
 	$sql = "DELETE FROM categorias WHERE id_Categoria='$idC'";
-	if ($stmt = $con->prepare($sql)) 
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
 		$stmt->close(); // close statement
@@ -35,10 +35,10 @@
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 
 		</div>

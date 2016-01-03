@@ -7,47 +7,8 @@
 		header("location:../login.php");
 		exit;
 	}
-
-	if(isset($_POST['editar']))
-	{
-		$id = $_POST['id'];
-		$nome = $_POST['nome'];
-		$morada = $_POST['morada'];
-		$telefone = $_POST['telefone'];
-		$email = $_POST['email'];
-		$nif = $_POST['nif'];
-		$dataN = $_POST['dataN'];
-		$dataE = $_POST['dataE'];
-
-		$sql = "UPDATE funcionarios SET id_funcionario='$id', nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif', data_nascimento='$dataN', data_entrada='$dataE' WHERE id_funcionario='$id'";
-
-		if ($mysqli->query($sql) === TRUE) 
-		{
-			echo "<script> alert('Cliente editado com sucesso!') </script>";
-			echo "<script type=\"text/javascript\"> 
-				       window.location=\"sucesso.php\";
-				  </script>";
-
-			/*$stmt->execute();
-			$stmt->bind_result($id, $nome, $morada, $telefone, $email, $nif, $dataN, $dataE);
-
-			while ($stmt->fetch()) 
-			{
-				echo "<h2>Funcionário alterado com sucesso!</h2>";
-			}
-			echo "<h2>Funcionário alterado com sucesso!</h2>";
-			$stmt->close();*/
-		}
-		else
-		{
-			echo "<script type=\"text/javascript\">
-				alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\");
-			</script>";
-
-		}
-	}
-	mysqli_close($mysqli);
 ?>
+
 
 <html>
 <head>
@@ -77,6 +38,36 @@
 		<tr bgcolor="#c1c1ff"> <td colspan="3"> <input type="submit" name="editar" class="button" value="Editar"> </td> </tr>
 	</form>
 	</table>
+
+	<?php
+
+		if(isset($_POST['editar']))
+		{
+			$id = $_POST['id'];
+			$nome = $_POST['nome'];
+			$morada = $_POST['morada'];
+			$telefone = $_POST['telefone'];
+			$email = $_POST['email'];
+			$nif = $_POST['nif'];
+			$dataN = $_POST['dataN'];
+			$dataE = $_POST['dataE'];
+
+			$sql = "UPDATE funcionarios SET id_funcionario='$id', nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif', data_nascimento='$dataN', data_entrada='$dataE' WHERE id_funcionario='$id'";
+
+			if ($mysqli->query($sql) === TRUE) 
+			{
+				echo "<h2>Funcionário alterado com sucesso!</h2>";
+			}
+			else
+			{
+				//echo "ERROR: " .$sql." ".$mysqli->error;
+				echo "<br><br><b>MYSQL ERROR:<b><br>";
+				echo mysqli_error($mysqli);
+			}
+		}
+		mysqli_close($mysqli);
+	?>
+
 	</div>
 	<!-- ****************** FOOTER *************** -->
 	<?php include("footer.php"); ?>

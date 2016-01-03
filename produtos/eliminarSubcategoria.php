@@ -3,7 +3,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 
@@ -27,7 +27,7 @@
 	$idSub = $_GET["idSub"];
 	
 	$sql = "DELETE FROM subcategorias WHERE id_Subcategoria='$idSub'";
-	if ($stmt = $con->prepare($sql)) 
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
 		$stmt->close(); // close statement
@@ -35,10 +35,10 @@
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 
 		</div>

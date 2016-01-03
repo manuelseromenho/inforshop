@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script>
-		/*function passar(str) {
+		function passar(str) {
 	    if (str == "") {
 	        document.getElementById("txtHint").innerHTML = "";
 	        return;
@@ -20,46 +20,40 @@
 	                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
 	            }
 	        };
-	        xmlhttp.open("GET","adicionarProduto_ajax.php?idS="+str,true);
+	        xmlhttp.open("GET","adicionarProduto.php?idS="+str,true);
 	        xmlhttp.send();
 	    }
-	}*/
+	}
 	</script>
 </head>
 <body>
 
 <?php
 	require("../ligacaoBD.php");
-
 	$q = intval($_GET['idC']);
 
-	$sql_subcategorias= "SELECT s.id_subcategoria, s.nome_subcategoria FROM subcategorias as s, categorias as c 
-	WHERE s.id_categoria = c.id_categoria AND s.id_categoria = \"".$q."\"";
+	$sql = "SELECT s.id_Subcategoria, s.subcategoria FROM subcategorias as s, categorias as c 
+	WHERE s.id_Categoria = c.id_Categoria AND s.id_Categoria = ".$q."";
 	
-	//echo "<table class='table' width='auto'>";
-	//echo "<tr> <td> <p class='label'> Subcategoria: </p> </td> ";
-	if ($smtp = $mysqli->prepare($sql_subcategorias))
+	echo "<table class='table' width='auto'>";
+	echo "<tr> <td> <p class='label'> Subcategoria: </p> </td> ";
+	if ($smtp = $con->prepare($sql))
 	{
 		$smtp->execute();						
 		$smtp->bind_result($idS, $sub);
 
-		//echo "<td> <p class='label'> <select name='idS' class='selected'>";
-
-
-		//echo "<option value=".$_POST['$idS']." selected> Seleccione uma subcategoria </option>\n";
-		//echo "<option value=".$idS." selected> Seleccione uma subcategoria </option>\n";
+		echo "<td> <p class='label'> <select name='idS' class='selected'>";
+		echo "<option value=".$_POST['$idS']." selected> Seleccione uma subcategoria </option>\n";
 		while ($smtp->fetch())
 		{	
-			//echo "<option value=".$_POST['$idS'].">  $sub ($idS) </option>\n";
-			echo "<option value=".$idS.">  $sub  </option>\n";
-			
-			//print_r($_POST);
+			echo "<option value=".$_POST['$idS'].">  $sub ($idS) </option>\n";
+			print_r($_POST);
 		}
-
+		echo "</select>";
 		
 	}	
-
-	//echo "<td> <a href='adicionarProduto_ajax.php?id=$idS'> <img src='../imagens/load.png' > </a></td></tr>";
+	echo "</td> ";
+	echo "<td> <a href='adicionarProduto.php?id=$idS'> <img src='../imagens/load.png' > </a></td></tr>";
 
 ?>
 </body>

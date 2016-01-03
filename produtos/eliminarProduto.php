@@ -1,14 +1,12 @@
 <?php 
+	require("../ligacaoBD.php");
 	session_start(); /* Starts the session */
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
-
-	require("../ligacaoBD.php");
-
 ?>
 
 <html>
@@ -27,18 +25,19 @@
 	$idP = $_GET["idP"];
 	
 	$sql = "DELETE FROM produtos WHERE id_Produto='$idP'";
-	if ($stmt = $con->prepare($sql)) 
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
-		$stmt->close(); // close statement
 		echo ("<h2> Produto eliminado com sucesso! </h2>");
+		
+		$stmt->close(); // close statement
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 
 		</div>

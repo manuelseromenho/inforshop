@@ -1,7 +1,7 @@
-<html>
+
 <head>
 	<title> INFORSHOP </title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
 	<meta charset='utf-8'>  
 </head>
@@ -49,6 +49,3 @@
 		  	<!--<li class='last'><a href='#'><span>Contactos</span></a></li>-->
 		</ul>
 	</div>
-
-</body>
-</html>
