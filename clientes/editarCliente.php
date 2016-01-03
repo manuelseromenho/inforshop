@@ -52,7 +52,13 @@
 			$email = $_POST['email'];
 			$nif = $_POST['nif'];
 
-			$sql = "UPDATE clientes SET nome='$nome', morada='$morada', telefone='$telefone', email='$email', nif='$nif' WHERE id_cliente='$id'";
+			$sql = "UPDATE clientes 
+			SET nome='$nome', 
+			morada='$morada', 
+			telefone='$telefone', 
+			email='$email', 
+			nif='$nif' 
+			WHERE id_cliente='$id'";
 			
 			if ($mysqli->query($sql) === TRUE) 
 			{
