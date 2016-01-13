@@ -14,25 +14,17 @@
 <head>
 	<title> INFORSHOP </title>
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
-	<meta charset='utf-8'>
-
-	<!--jquery utilizado para datepicker--> 
+	<meta charset='utf-8'> 
 	<link href="../jquery/jquery-ui.css" rel="stylesheet" />
 	<script src="../jquery/jquery.min.js"></script>
 	<script src="../jquery/jquery-ui.js"></script>
 	<script>
-
-
-
 		function addRow(tableID) 
 		{
 		        var table = document.getElementById(tableID);
 		        var rowCount = table.rows.length;
 		        var row = table.insertRow(rowCount);
-		        kl = table.rows.length;
 		        var colCount = table.rows[1].cells.length;
-		        //kc = colCount;
-
 		        for(var i=0; i<colCount; i++) 
 		        {
 		            var newcell = row.insertCell(i);
@@ -52,9 +44,6 @@
 		                case "text":
 		                    newcell.childNodes[0].value = "";
 		                    break;
-	                    case "text":
-	                    	newcell.childNodes[0].value = "";
-	                    break;
 		            }
 		        }
 		   }
@@ -67,7 +56,7 @@
 	            var chkbox = row.cells[0].childNodes[0];
 	            if(null != chkbox && true == chkbox.checked) {
 	                if(rowCount <= 2) {
-	                    alert("Tem que existir pelo menos uma linha!");
+	                    alert("Cant delete all rows");
 	                    break;
 	                }
 	                table.deleteRow(i);
@@ -107,15 +96,11 @@
 
 		function showProd(str) 
 		{
-		    //var _elements = document.getElementsByName('txtHint1');
-		   	var kl = document.getElementById("dataTable").rows.length - 1;
-		   	//alert(kl);
 		    if (str == "") {
-		        document.getElementById("dataTable").rows[kl].cells[3].innerHTML= "";
+		        document.getElementById("txtHint1").innerHTML = "";
 		        return;
 		    } else { 
-		        if (window.XMLHttpRequest) 
-		        {
+		        if (window.XMLHttpRequest) {
 		            // code for IE7+, Firefox, Chrome, Opera, Safari
 		            xmlhttp = new XMLHttpRequest();
 		        } else {
@@ -123,58 +108,14 @@
 		            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		        }
 		        xmlhttp.onreadystatechange = function() {
-		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-		            {
-		            	document.getElementById("dataTable").rows[kl].cells[3].innerHTML = xmlhttp.responseText;
+		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		                document.getElementById("txtHint1").innerHTML = xmlhttp.responseText;
 		            }
 		        };
 		        xmlhttp.open("GET","getprod.php?idP="+str,true);
 		        xmlhttp.send();
 		    }
 		}
-
-		function verifyQtd(qtd)
-		{
-		   	//var kl = document.getElementById("dataTable").rows.length - 1;
-		   	var tbl= document.getElementById('dataTable');
-		   	var kl = tbl.rows.length - 1;
-		   	//var rowx = tbl.firstChild.firstChild;
-		   	//var kl = rowx;
-		   	//alert (rowx);
-		   	
-		   //	var prod= prow.options[prow.selectedIndex].value;
-
-
-		    if (qtd == "") {
-		        document.getElementById('dataTable').rows[kl].cells[5].innerHTML= "";
-		        return;
-		    } else { 
-		        if (window.XMLHttpRequest) 
-		        {
-		            // code for IE7+, Firefox, Chrome, Opera, Safari
-		            xmlhttp = new XMLHttpRequest();
-		           	var prod = tbl.rows[kl].cells[1].firstChild[tbl.rows[kl].cells[1].firstChild.selectedIndex].value;
-		           	//alert (prod);
-		        } else {
-		            // code for IE6, IE5
-		            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		        }
-		        xmlhttp.onreadystatechange = function() 
-		        {
-		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-		            {
-		            	
-		            	document.getElementById('dataTable').rows[kl].cells[5].innerHTML = xmlhttp.responseText;
-		            	
-
-		            }
-		        };
-		        xmlhttp.open("GET","verifyQtd.php?id_produto="+prod+"&qtd="+qtd,true);
-		        xmlhttp.send();
-		    }
-		}
-
-
 	
 	</script>
 </head>
@@ -185,7 +126,7 @@
 	<div class="container">
 
 	
-	<form action="adicionarCompra.php" method="POST" onkeydown="return !(event.keyCode==13)">
+	<form action="adicionarCompra.php" method="POST">
 		<table class="procura">
 			<tr bgcolor="#c1c1ff"> 
 				<td colspan="2"> <h2> Fazer uma nova compra </h2></td>
@@ -204,18 +145,19 @@
 							$smtp->bind_result($idCliente, $nomeC);
 							
 							echo "<p class='label'> <select name='idCliente' class='selected' onchange='showUser(this.value)'>";
-							echo "<option value='$idCliente' selected> Seleccione um cliente </option>";
+							echo "<option value='$idCliente' selected> Seleccione um cliente </option>\n";
 							while ($smtp->fetch())
 							{	
-								echo "<option value='$idCliente'> $nomeC ($idCliente) </option>";						
+								echo "<option value='$idCliente'> $nomeC ($idCliente) </option>\n";						
 							}
-							echo "</select></td>";
+							echo "</select>";
 
 						}
 					?>
+				</td>
 			</tr>
 					
-			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td> <p> <input type="date" name="data" id="data" class="selected" required> </p>  </td> </tr>
+			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td> <p> <input type="date" name="data" id="data" class="selected"> </p>  </td> </tr>
 			<tr> <td> <p class="label"> Preço Total: </p> </td> 	<td> <p> <input type="text" name="preco" class="selected"> </p> </td> </tr>
 		</table>
 
@@ -246,35 +188,33 @@
 			</tr>
 			<tr>
 				<td style="width:20px;"><input type="checkbox" name="chk" /></td>
-				
+				<td style="width:80px;">
 						<?php
-							$sql_prod = "SELECT id_produto, nome_produto, quantidade
+							$sql_prod = "SELECT id_produto, nome_produto,quantidade, preco_venda
 									FROM produtos
 									ORDER BY id_produto ASC";
 
 							if ($smtp = $mysqli->prepare($sql_prod))
 							{
 								$smtp->execute();						
-								$smtp->bind_result($idP, $descricao, $qtd);
+								$smtp->bind_result($idP, $descricao, $stock, $preco);
 
-								//para o firstChild funcionar, o html não pode ter espaços e paragrafos 
-								echo "<td style='width:80px';><select name='produto[]' onchange='showProd(this.value)'><option value='$idP' selected> Seleccione um produto </option>";
+								echo "<select  name='produto[]' onchange='showProd(this.value)'>";
+								echo "<option value='$idP' selected> Seleccione um produto </option>\n";
 								while ($smtp->fetch())
 								{		
-									echo "<option value='$idP'> $descricao -> QTD($qtd)</option>";
+									echo "<option value='$idP'> $descricao ($idP)</option>\n";
 								}
-								echo "</select></td>";
+								echo "</select>";
 							}
-
 						?>
 
-	
-				<td style="width:80px;"><input type="text" name="qtd[]" onchange="verifyQtd(this.value)" required/></td>
-				<td style="width:80px;" >
-					<div name="txtHint1"></div>
+				</td>
+				<td style="width:80px;"><input type="text" name="qtd[]" required/></td>
+				<td style="width:80px;">
+					<input type="text" id="txtHint1" name="preco[]" required/>
 				</td>
 				<td style="width:80px;"><input type="text" name="desconto[]"/></td>
-				<td> <div name="chkQtd"></div></td>
 			</tr>
 		</table>
 
@@ -284,83 +224,46 @@
 
 	</form>
 
-	<?php
-		
-		if(isset($_POST['send'])) 
-		{
-		
-			$cliente = mysqli_real_escape_string($mysqli, $_POST['idCliente']);
-			$data_compra = mysqli_real_escape_string($mysqli, $_POST['data']);
-			$sql_update = "";
 
-			//bloqueia a tabela compra, escreve a inserção do registo da compra, abre de novo
-			$sql = "LOCK TABLES `compra` WRITE;
-							/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
 
-							INSERT INTO compra
-							VALUES ('', '$data_compra', '$cliente');
 
-							/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
-							UNLOCK TABLES;
+		<table class="procura">
+		<tr> 
+			<td> <p class="label"> Descrição do Produto: </p></td>
+			<!--<td colspan="2">-->
+			<td>
+				<?php
+					$sql_prod = "SELECT id_produto, nome_produto 
+							FROM produtos
+							ORDER BY id_produto ASC";
 
-							SELECT last_insert_id() into @lastid;
-							";
+					if ($smtp = $mysqli->prepare($sql_prod))
+					{
+						$smtp->execute();						
+						$smtp->bind_result($idP, $descricao);
+
+						echo "<p class='label'> <select name='idP' class='selected' onchange='showProd(this.value)'>";
+						echo "<option value='$idP' selected> Seleccione um produto </option>\n";
+						while ($smtp->fetch())
+						{		
+							echo "<option value='$idP'> $descricao ($idP)</option>\n";
+						}
+						echo "</select> </p> ";
+					}
+				?>
+				</td>
+			</tr>
+			<tr> <td colspan="2"> <div id="txtHint2"> </div> </td> </tr>
+			<tr> <td> <p class="label"> Quantidade: </p> </td> 		<td> <p> <input type="text" name="quantidade" class="selected"> </p> </td> </tr>
+		</table>
+
 			
-
-
-			$count = 0;
-			//contagem de linhas na tabela detalhes, o uso do "preco" poderia ser substituido por "qtd", "desconto"
-			$count = count($_POST['preco']) - 1;
-
-
-			//bloqueamento da tabela detalhes_compra, compra
-			#$sql.="LOCK TABLES `detalhes_compra` WRITE;
-			#	/*!40000 ALTER TABLE `detalhes_compra` DISABLE KEYS */;
-			#	/*!40000 ALTER TABLE `produtos` DISABLE KEYS */;";
-
-
-			for($i = 0; $i <= $count; $i++)
-			{
-				// Utilização de um array de inputs com o mesmo nome, por exemplo "qtd[]"
-				$produto = mysqli_real_escape_string($mysqli, $_POST['produto'][$i]);
-				$qtd = mysqli_real_escape_string($mysqli, $_POST['qtd'][$i]);
-				$preco = mysqli_real_escape_string($mysqli, $_POST['preco'][$i]);
-				$desconto = mysqli_real_escape_string($mysqli, $_POST['desconto'][$i]);
-	  
-				//id_detalhe, id_compra(lastid), id_produto, quantidade, desconto
-	  			$sql.="INSERT into detalhes_compra 
-	  					VALUES ('',@lastid, '$produto', '$qtd','$desconto');";
-
-	  			//UPDATE ao Stock
-	  			$sql.="UPDATE produtos
-	  					SET quantidade = quantidade - '$qtd'
-	  					WHERE id_produto = '$produto';";
-			}
-
-			# $sql.="/*!40000 ALTER TABLE `detalhes_compra` ENABLE KEYS */;
-			#		/*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
-			#			UNLOCK TABLES;";
-
-			$sql.="UNLOCK TABLES;";
-
-			if($mysqli->multi_query($sql) === TRUE)
-			{
-				echo "<h2>Compra(s) adicionada(s) com sucesso!</h2>";
-			}
-			else
-			{
-				echo "<br><br><b>MYSQL ERROR:<b><br>";
-				echo mysqli_error($mysqli);
-			}
-			mysqli_close($mysqli);
-
-
-		}
-
-
-	//var_dump ($sql);
-	?>
-
+		    
+		    
+		    <!--<table class="procura">
+				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="finalizar" class="button" value="Finalizar Compra" /></td></tr>
+			</table>-->
+		</form>
 
 	</div>
 	

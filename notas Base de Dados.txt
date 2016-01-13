@@ -1,0 +1,90 @@
+
+Sistema para registar
+
+Assistência:
+- Clientes
+- Assistências (possibilidade de imprimir as folhas de assistências como "relatórios")
+- Material em Reparação/Reparado
+
+Stock:
+- Material novo em Stock, vários grupos distintos
+- Material em segunda mão em stock, entradas e saidas.
+
+Talvez?
+Controlo de:
+- Fornecedores
+- Vendas
+- Marcas
+- etc...
+
+
+27/12/2015
+- Relativamente a alteração no "adicionarProduto", estava-se a fazer algo como
+//echo "<option value=".$_POST['$idS'].">  $sub ($idS) </option>\n";
+em que supostamente tentava-se obter por "Post" a variavel $idS, o que é 
+desnecessário, pois a variavel $idS aparentemente continua na memória
+apenas sendo necessário indicar o conteudo para esta variavel, através de:
+//echo "<option value=".$idS.">  $sub ($idS) </option>\n"; 
+fazendo com que no momento do "Insert" esteja a informação escolhida da subcategoria (combobox)
+
+- remoção campo "modelo" da tabela "Marcas";
+- necessidade de introdução de uma entidade associativa entre a entidade "Compras"
+e "Produtos".
+
+
+http://www.nusphere.com/kb/phpmanual/function.mysqli-fetch-assoc.htm?
+
+http://www.w3schools.com/Jsref/event_onchange.asp
+
+http://www.electrictoolbox.com/javascript-add-options-html-select/
+
+http://www.w3schools.com/php/php_ajax_database.asp
+
+http://stackoverflow.com/questions/14007629/document-getelementbyidremember-visibility-hidden-not-working-on-a-chec
+
+http://www.phpro.org/tutorials/Insert-Multiple-Rows-Into-MySQL-The-Right-Way-With-PHP.html
+
+***DATEPICKERS no Firefox***
+http://code.tutsplus.com/tutorials/quick-tip-create-cross-browser-datepickers-in-minutes--net-20236
+https://jqueryui.com/datepicker/#dropdown-month-year
+****************************
+
+01/01/2016
+Funcionários
+	Adicionar -> Uso de Jquery para Datepicker, pois o "input type='date'" não funciona no Firefox. Verificação dos campos com ajuda da base de dados (campos nulos, valores já existentes ex: NIF).
+
+	Pesquisar -> Uso de Ajax para a pesquisa geral de funcionários, ou pesquisa por ID. Uso de Ajax na eliminação.
+
+03/01/2016
+Array Dinamico PHP
+http://stackoverflow.com/questions/3325009/add-data-dynamically-to-an-array
+
+08/01/2016
+Ultimo ID da tabela inserido
+http://stackoverflow.com/questions/14255373/mysql-get-last-id-of-specific-table
+
+Verificar numero de linhas numa tabela
+http://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_table_cells
+
+Aceder as células de uma tabela
+http://www.w3schools.com/jsref/coll_table_cells.asp
+
+Uso de getElementsByName
+http://stackoverflow.com/questions/8845886/using-document-getelementsbyname-isnt-working
+http://stackoverflow.com/questions/6967297/getelementsbyname-not-working
+
+Criar View (tabela virtual)
+http://www.w3schools.com/sql/sql_view.asp
+
+Duvida acerca de correr várias queries ao mesmo tempo
+http://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
+
+Aceder a células de tabela através de JS
+http://www.mredkj.com/tutorials/tablebasics2.html
+
+Esclarecimento sobre o uso de FIRSCHILD e problemas em FIREFOX
+http://codexexempla.org/curso/curso_4_3_b.php#fCh
+
+
+
+

@@ -3,34 +3,11 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 
 	require("../ligacaoBD.php");
-
-	if(isset($_POST['editar']))
-	{
-		$idM = $_POST['idMarca'];
-		$marca = $_POST['marca'];
-
-		$sql = mysqli_query($mysqli, "UPDATE marcas SET id_Marca='$idM', marca='$marca' WHERE id_Marca='$idM'");
-
-		if ($stmt = $mysqli->prepare($sql)) 
-		{
-			$stmt->execute();
-			$stmt->bind_result($idM, $marca);
-
-			while ($stmt->fetch()) 
-			{
-				//echo "<script> alert('Produto alterado com sucesso!\n'); </script>";
-			}
-			echo "<h2>Marca alterada com sucesso!\n'); </script>";		
-			$stmt->close();
-		}
-	}
-	
-	mysqli_close($mysqli);
 
 ?>
 
@@ -56,6 +33,36 @@
 		<tr bgcolor="#c1c1ff"> <td colspan="3"> <input type="submit" name="editar" class="button" value="Editar"> </td> </tr>
 	</form>
 	</table>
+
+<?php 
+if(isset($_POST['editar']))
+	{
+		$idM = $_POST['idMarca'];
+		$marca = $_POST['marca'];
+
+		$sql = mysqli_query($mysqli, "UPDATE marcas SET marca='$marca' WHERE id_Marca='$idM'");
+
+		echo "<h2>Marca alterada com sucesso!</h2>";	
+		
+		/*if ($stmt = $mysqli->prepare($sql)) 
+		{
+			$stmt->execute();
+			$stmt->bind_result($idM, $marca);
+
+			while ($stmt->fetch()) 
+			{
+				//echo "<script> alert('Produto alterado com sucesso!\n'); </script>";
+			}
+			echo "<h2>Marca alterada com sucesso!\n'); </script>";		
+			$stmt->close();
+		}*/
+	}
+	
+	mysqli_close($mysqli);
+?>
+
+
+
 	</div>
 	<!-- ****************** FOOTER *************** -->
 	<?php include("footer.php");	?>

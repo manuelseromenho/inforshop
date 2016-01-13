@@ -1,12 +1,11 @@
 <?php 
-	session_start(); //Starts the session
+	session_start(); /* Starts the session */
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:../login.php");
+		header("location:login.php");
 		exit;
 	}
-
 	require("../ligacaoBD.php");
 ?>
 
@@ -22,24 +21,23 @@
 	<?php include("header.php"); ?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
+		<p>OLA MUNDO!!!! ELIMINAR COMPRAS </p>
 <?php
-	$idCompra = $_GET["idCompra"];
+	$id_C = $_GET["id_C"];
 	
-	$sql = "DELETE FROM compra 
-			WHERE id_compra='$idCompra'";
-
-	if ($stmt = $mysqli->prepare($sql)) 
+	$sql = "DELETE FROM compra WHERE id_Compra='$id_C'";
+	if ($stmt = $con->prepare($sql)) 
 	{
 		$stmt->execute();
 		$stmt->close(); // close statement
-		echo "<h2>Compra eliminada com sucesso!</h2>";
+		echo ("<h2>Compra eliminado com sucesso!</h2>");
 	}
 	else
 	{ 
-		echo mysqli_error ($mysqli);
+		echo mysqli_error ($con);
 	}
 
-	$mysqli->close(); //close connection
+	$con->close(); //close connection
 ?>
 	</div>
 	<!-- ****************** FOOTER *************** -->

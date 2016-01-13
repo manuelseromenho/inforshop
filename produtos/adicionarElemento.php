@@ -87,38 +87,47 @@
 				$checkn = "SELECT * FROM marcas WHERE marca='$marca'";
 				$result = mysqli_query($mysqli, $checkn);
 
-				if(mysqli_num_rows($result)>0)
-				{	echo "<br>Já existe esta Marca";	}
-				else
+				if($marca != "")
 				{
-					$sql = "INSERT INTO marcas VALUES ('$idM', '$marca')";
-					
-					if (mysqli_multi_query($mysqli, $sql))
-					{
-						//echo "<script> alert('Cliente inserido com sucesso!') ";
 
-						$sql = "SELECT * FROM marcas ORDER BY id_Marca DESC LIMIT 1";
-						$result = $mysqli->query($sql);
-
-						if ($result->num_rows > 0) 
-						{
-					    	// output data of each row
-						    while($row = $result->fetch_assoc()) 
-						    {
-						        //echo "<script> alert('ID Marca: ".$row["id_Marca"].". Marca: " .$row["marca"]. "') </script>";
-						    	echo "<h2>Marca Adicionada".$row['id_Marca']." nome:".$row['marca']."</h2>";
-						    }
-						} 
-						else 
-						{
-						    echo "<script> alert('Impossivel inserir esta marca. TENTE DE NOVO.'); </script>";
-						}
-					}
+					if(mysqli_num_rows($result)>0)
+					{	echo "<br>Já existe esta Marca";	}
 					else
 					{
-						echo "<script> alert('ERROR: ' .$sql. '<br>' . $mysqli->error.') </script>";
+						$sql = "INSERT INTO marcas VALUES ('$idM', '$marca')";
+						
+						if (mysqli_multi_query($mysqli, $sql))
+						{
+							//echo "<script> alert('Cliente inserido com sucesso!') ";
+
+							$sql = "SELECT * FROM marcas ORDER BY id_Marca DESC LIMIT 1";
+							$result = $mysqli->query($sql);
+
+							if ($result->num_rows > 0) 
+							{
+						    	// output data of each row
+							    while($row = $result->fetch_assoc()) 
+							    {
+							        //echo "<script> alert('ID Marca: ".$row["id_Marca"].". Marca: " .$row["marca"]. "') </script>";
+							    	echo "<h2>Marca Adicionada".$row['id_Marca']." nome:".$row['marca']."</h2>";
+							    }
+							} 
+							else 
+							{
+							    echo "<script> alert('Impossivel inserir esta marca. TENTE DE NOVO.'); </script>";
+							}
+						}
+						else
+						{
+							echo "<script> alert('ERROR: ' .$sql. '<br>' . $mysqli->error.') </script>";
+						}
 					}
 				}
+				else
+				{
+					echo "<br>Campo Marca vazio!";	
+				}
+
 			}
 		?>
 
@@ -191,38 +200,47 @@
 				$checkn = "SELECT * FROM categorias WHERE nome_categoria = '$cat'";
 				$result = mysqli_query($mysqli, $checkn);
 
-				if(mysqli_num_rows($result)>0)
-				{	echo "<br>Já existe esta Categoria!";	}
-				else
+				if($cat != "")
 				{
-					$sql = "INSERT INTO categorias VALUES ('$idC', '$cat')";
-					
-					if (mysqli_multi_query($mysqli, $sql))
-					{
-						//echo "<script> alert('Cliente inserido com sucesso!') ";
 
-						$sql = "SELECT * FROM categorias ORDER BY id_categoria DESC LIMIT 1";
-						$result = $mysqli->query($sql);
-
-						if ($result->num_rows > 0) 
-						{
-					    	// output data of each row
-						    while($row = $result->fetch_assoc()) 
-						    {
-						        //echo "<script> alert('ID Categoria: ".$row["id_Categoria"].". Categoria: " .$row["categoria"]. "') </script>";
-						        echo "<h2>Categoria Adicionada"." nome:".$row['nome_categoria']."</h2>";
-						    }
-						} 
-						else 
-						{
-						    echo "<script> alert('Impossivel inserir esta categoria. TENTE DE NOVO.'); </script>";
-						}
-					}
+					if(mysqli_num_rows($result)>0)
+					{	echo "<br>Já existe esta Categoria!";	}
 					else
 					{
-						echo "<script> alert('ERROR: ' .$sql. '<br>' . $mysqli->error.') </script>";
+						$sql = "INSERT INTO categorias VALUES ('$idC', '$cat')";
+						
+						if (mysqli_multi_query($mysqli, $sql))
+						{
+							//echo "<script> alert('Cliente inserido com sucesso!') ";
+
+							$sql = "SELECT * FROM categorias ORDER BY id_categoria DESC LIMIT 1";
+							$result = $mysqli->query($sql);
+
+							if ($result->num_rows > 0) 
+							{
+						    	// output data of each row
+							    while($row = $result->fetch_assoc()) 
+							    {
+							        //echo "<script> alert('ID Categoria: ".$row["id_Categoria"].". Categoria: " .$row["categoria"]. "') </script>";
+							        echo "<h2>Categoria Adicionada"." nome:".$row['nome_categoria']."</h2>";
+							    }
+							} 
+							else 
+							{
+							    echo "<script> alert('Impossivel inserir esta categoria. TENTE DE NOVO.'); </script>";
+							}
+						}
+						else
+						{
+							echo "<script> alert('ERROR: ' .$sql. '<br>' . $mysqli->error.') </script>";
+						}
 					}
 				}
+				else
+				{
+					echo "<br>Campo Categoria vazio!";	
+				}
+
 			}
 
 		?>

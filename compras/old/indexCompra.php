@@ -1,5 +1,5 @@
 <?php 
-	session_start(); //Starts the session
+	session_start(); /* Starts the session */
 
 	if(!isset($_SESSION['user']))
 	{
@@ -21,7 +21,7 @@
 	<?php include('header.php'); ?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
-		<p>----- TABELA COMPRAS -----</p>
+		<p>OLA MUNDO!!!! TABELA COMPRAS </p>
 	</div>
 	<!-- ****************** FOOTER *************** -->
 	<?php include('footer.php'); ?>

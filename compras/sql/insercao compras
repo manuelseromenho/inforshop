@@ -1,0 +1,25 @@
+USE INFORSHOP;
+
+LOCK TABLES `compra` WRITE;
+/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
+
+-- id, data, id_cliente
+INSERT INTO compra
+VALUES ('', '2015/11/10', '2');
+
+/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
+UNLOCK TABLES;
+
+SELECT last_insert_id() into @lastid;
+
+LOCK TABLES `detalhes_compra` WRITE;
+/*!40000 ALTER TABLE `detalhes_compra` DISABLE KEYS */;
+-- varios detalhes
+-- id, lastid, id_produto, quantidade, desconto
+INSERT into detalhes_compra VALUES (' ',@lastid, '1', '1','0');
+INSERT into detalhes_compra VALUES (' ',@lastid, '1', '1','0');
+INSERT into detalhes_compra VALUES (' ',@lastid, '1', '1','0');
+
+/*!40000 ALTER TABLE `detalhes_compra` ENABLE KEYS */;
+
+UNLOCK TABLES;

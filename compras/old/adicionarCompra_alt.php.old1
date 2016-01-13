@@ -1,0 +1,177 @@
+<?php 
+	session_start(); // Starts the session 
+
+	if(!isset($_SESSION['user']))
+	{
+		header("location:login.php");
+		exit;
+	}
+
+	require("../ligacaoBD.php");
+	
+?>
+<html>
+<head>
+	<title> INFORSHOP </title>
+	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
+	<meta charset='utf-8'> 
+	<link href="../jquery/jquery-ui.css" rel="stylesheet" />
+	<script src="../jquery/jquery.min.js"></script>
+	<script src="../jquery/jquery-ui.js"></script>
+	<script>
+
+		function showUser(str) 
+	{
+	    if (str == "") {
+	        document.getElementById("txtHint").innerHTML = "";
+	        return;
+	    } else { 
+	        if (window.XMLHttpRequest) {
+	            // code for IE7+, Firefox, Chrome, Opera, Safari
+	            xmlhttp = new XMLHttpRequest();
+	        } else {
+	            // code for IE6, IE5
+	            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	        }
+	        xmlhttp.onreadystatechange = function() {
+	            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+	            }
+	        };
+	        xmlhttp.open("GET","getuser.php?idCliente="+str,true);
+	        xmlhttp.send();
+	    }
+	}
+
+	function showProd(str) {
+	    if (str == "") {
+	        document.getElementById("txtHint2").innerHTML = "";
+	        return;
+	    } else { 
+	        if (window.XMLHttpRequest) {
+	            // code for IE7+, Firefox, Chrome, Opera, Safari
+	            xmlhttp = new XMLHttpRequest();
+	        } else {
+	            // code for IE6, IE5
+	            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	        }
+	        xmlhttp.onreadystatechange = function() {
+	            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	                document.getElementById("txtHint2").innerHTML = xmlhttp.responseText;
+	            }
+	        };
+	        xmlhttp.open("GET","getprod.php?idP="+str,true);
+	        xmlhttp.send();
+	    }
+	}
+	
+	</script>
+</head>
+<body>
+	<!-- ************ HEADER ************** -->
+	<?php include("header.php"); ?>
+	<!-- ***************** BODY *****************-->
+	<div class="container">
+
+	
+	<form action="adicionarCompra_alt.php" method="POST">
+		<table class="procura">
+			<tr bgcolor="#c1c1ff"> 
+				<td colspan="2"> <h2> Fazer uma nova compra </h2></td>
+			</tr>
+			<tr> 
+				<td> <p class="label"> Nome do Cliente: </p> </td> 
+				<td>
+					<?php
+						$sql = "SELECT id_Cliente, nome
+								FROM clientes
+								ORDER BY id_Cliente ASC";
+
+						if ($smtp = $mysqli->prepare($sql))
+						{
+							$smtp->execute();						
+							$smtp->bind_result($idCliente, $nomeC);
+							
+							echo "<p class='label'> <select name='idCliente' class='selected' onchange='showUser(this.value)'>";
+							echo "<option value='$idCliente' selected> Seleccione um cliente </option>\n";
+							while ($smtp->fetch())
+							{	
+								echo "<option value='$idCliente'> $nomeC ($idCliente) </option>\n";						
+							}
+							echo "</select>";
+
+						}
+					?>
+				</td>
+			</tr>
+					
+			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td> <p> <input type="date" name="data" id="data" class="selected"> </p>  </td> </tr>
+			<tr> <td> <p class="label"> Preço Total: </p> </td> 	<td> <p> <input type="text" name="preco" class="selected"> </p> </td> </tr>
+		</table>
+
+		<!--Script para o Datepicker no Firefox, caso não seja nativo-->
+			<script>
+			      var elem = document.createElement('input');
+			      elem.setAttribute('type', 'date');
+			 
+			      if ( elem.type === 'text' ) 
+			      {
+			      	$('#data').datepicker({changeMonth: true, changeYear: true});
+			      	$( "#data" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+			      }
+
+			</script>
+			<!-- ###################################################### -->
+
+
+
+
+		<div id="txtHint"> </div>
+		<table class="procura">
+		<tr> 
+			<td> <p class="label"> Descrição do Produto: </p></td>
+			<!--<td colspan="2">-->
+			<td>
+				<?php
+					$sql_prod = "SELECT id_produto, nome_produto 
+							FROM produtos
+							ORDER BY id_produto ASC";
+
+					if ($smtp = $mysqli->prepare($sql_prod))
+					{
+						$smtp->execute();						
+						$smtp->bind_result($idP, $descricao);
+
+						echo "<p class='label'> <select name='idP' class='selected' onchange='showProd(this.value)'>";
+						echo "<option value='$idP' selected> Seleccione um produto </option>\n";
+						while ($smtp->fetch())
+						{		
+							echo "<option value='$idP'> $descricao ($idP)</option>\n";
+						}
+						echo "</select> </p> ";
+					}
+				?>
+				</td>
+			</tr>
+			<tr> <td colspan="2"> <div id="txtHint2"> </div> </td> </tr>
+			<tr> <td> <p class="label"> Quantidade: </p> </td> 		<td> <p> <input type="text" name="quantidade" class="selected"> </p> </td> </tr>
+		</table>
+
+			
+		    
+		    
+		    <!--<table class="procura">
+				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="finalizar" class="button" value="Finalizar Compra" /></td></tr>
+			</table>-->
+		</form>
+
+	</div>
+	
+	<!-- ****************** FOOTER *************** -->
+	<?php 
+		include("footer.php"); 
+		mysqli_close($mysqli);
+	?>
+
+</body>
+</html>
