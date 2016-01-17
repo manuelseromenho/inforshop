@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+
+<?php
+require("../ligacaoBD.php");
+
+$q_idP = intval($_GET['idP']);
+$sql_idP = "SELECT * FROM produtos WHERE id_produto = '".$q_idP."'";
+$result = mysqli_query($mysqli, $sql_idP);
+
+echo "<table class='table' width=''>";
+while($row = mysqli_fetch_array($result)) {
+   	echo "<tr>	
+   			<th>Produto</th>
+   			<th>Nr Série</th>
+   			<th>Cod. Barras</th>
+   			<th>Peso</th>
+   			<th>Quantidade</th>
+   			<th>Preço</th>
+   		</tr>";
+
+   	echo "<tr>";
+    echo "<td> <p class='label'> ".$row['nome_produto']."  </p> </td>";
+    echo "<td> <p class='label'> ".$row['num_serie']." </p> </td>";
+    echo "<td> <p class='label'> ".$row['cod_barras']." </p> </td>";
+    echo "<td> <p class='label'> ".$row['peso']." </p> </td>";
+    echo "<td> <p class='label'> ".$row['quantidade']." </p> </td>";
+    echo "<td> <p class='label'> ".$row['preco_venda']." </p> </td>";
+    echo "</tr>";
+
+}
+echo "</table>";
+?>
+</body>
+</html>

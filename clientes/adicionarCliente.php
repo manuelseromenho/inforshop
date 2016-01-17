@@ -94,7 +94,7 @@
 					{
 					    //echo "<script> alert('Impossivel inserir este registo. TENTE DE NOVO.'); </script>";
 					    //echo mysqli_error($mysqli);
-					    echo "cara..";
+					    echo "...";
 					}
 				}
 				else

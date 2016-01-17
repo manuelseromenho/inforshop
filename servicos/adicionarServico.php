@@ -24,13 +24,13 @@
 	<!-- ***************** BODY *****************-->
 	<div class="container">
 
-		<table>
+		<table class="procura">
 			<form action="adicionarServico.php" method="POST">
 				<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Adicionar novo Serviço </h2> </td> </tr>
 				 
-		    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo_servico" class="input"> </p> </td></tr>
-		        <tr> <td> <p class="label"> Preço: </p> </td> 			<td> <p> <input type="text" name="preco" class="input"> </p> </td> </tr>
-		        <tr> <td> <p class="label"> Tempo Estimado: </p> </td> 	<td> <p> <input type="text" name="tempo_estimado" class="input"> </p>  </td> </tr>
+		    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo_servico" class="selected"> </p> </td></tr>
+		        <tr> <td> <p class="label"> Preço: (€) </p> </td> 			<td> <p> <input type="text" name="preco" class="selected"> </p> </td> </tr>
+		        <tr> <td> <p class="label"> Tempo Estimado: (min) </p> </td> 	<td> <p> <input type="text" name="tempo_estimado" class="selected"> </p>  </td> </tr>
 				
 				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="adicionar"> </td>
 			</form>

@@ -11,8 +11,8 @@
 		  	<li class='active'> <a href='../index.php'>Home </a> </li>
 		  	<li class='has-sub'> <a href='../assistencias/indexAssistencia.php'> Assistências </a>
 		  		<ul>
-		  			<li> <a href='adicionarAssistencia.php'> Adicionar </a> </li>
-		  			<li> <a href='pesquisarAssistencia.php'> Pesquisar </a> </li>
+		  			<li> <a href='../assistencias/adicionarAssistencia.php'> Adicionar </a> </li>
+		  			<li> <a href='../assistencias/pesquisarAssistencia.php'> Pesquisar </a> </li>
 		  		</ul>
 		  	</li>
 		  	<li class='has-sub'> <a href='../clientes/indexCliente.php'>Clientes</a>
@@ -27,10 +27,10 @@
 		  			<li> <a href='../compras/pesquisarCompra.php'> Pesquisar </a> </li>
 		  		</ul>
 		  	</li>
-		  	<li class='has-sub'> <a href='../funcionarios/indexFunc.php'> Funcionários </a>
+		  	<li class='has-sub'> <a href='indexFunc.php'> Funcionários </a>
 		  		<ul>
-		  			<li> <a href='../funcionarios/adicionarFunc.php'> Adicionar </a> </li>
-		  			<li> <a href='../funcionarios/pesquisarFunc.php'> Pesquisar </a> </li>
+		  			<li> <a href='adicionarFunc.php'> Adicionar </a> </li>
+		  			<li> <a href='pesquisarFunc.php'> Pesquisar </a> </li>
 		  		</ul>
 		  	</li>
 		  	<li class='has-sub'> <a href='../produtos/indexProduto.php'>Produtos</a>

@@ -86,5 +86,9 @@ Esclarecimento sobre o uso de FIRSCHILD e problemas em FIREFOX
 http://codexexempla.org/curso/curso_4_3_b.php#fCh
 
 
+No caso da tabela Detalhes de Compra, aparentemente será necessário esta ter uma chave primária unica, já que id_compra e id_produto em conjunto poderão causar a perda de dados.
+Ex: No caso de termos 1 compra, com 2 artigos iguais, com a mesma quantidade, apenas um dos artigos é que vai ser descontado de stock.
+
+
 
 

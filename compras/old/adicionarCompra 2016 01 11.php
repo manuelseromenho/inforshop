@@ -3,7 +3,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:../login.php");
+		header("location:login.php");
 		exit;
 	}
 
@@ -135,8 +135,15 @@
 
 		function verifyQtd(qtd)
 		{
+		   	//var kl = document.getElementById("dataTable").rows.length - 1;
 		   	var tbl= document.getElementById('dataTable');
 		   	var kl = tbl.rows.length - 1;
+		   	//var rowx = tbl.firstChild.firstChild;
+		   	//var kl = rowx;
+		   	//alert (rowx);
+		   	
+		   //	var prod= prow.options[prow.selectedIndex].value;
+
 
 		    if (qtd == "") {
 		        document.getElementById('dataTable').rows[kl].cells[5].innerHTML= "";
@@ -209,6 +216,7 @@
 			</tr>
 					
 			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td> <p> <input type="date" name="data" id="data" class="selected" required> </p>  </td> </tr>
+			<tr> <td> <p class="label"> Preço Total: </p> </td> 	<td> <p> <input type="text" name="preco" class="selected"> </p> </td> </tr>
 		</table>
 
 		<!--Script para o Datepicker no Firefox, caso não seja nativo-->
@@ -223,7 +231,7 @@
 			      }
 
 			</script>
-		<!-- ###################################################### -->
+			<!-- ###################################################### -->
 
 		<div id="txtHint"> </div>
 
@@ -233,8 +241,8 @@
 				<th></th>
 				<th>Produto</th>
 				<th>Qtd</th>
-				<th>Preço (€)</th>
-				<th>Desconto (%)</th>
+				<th>Preço</th>
+				<th>Desconto</th>
 			</tr>
 			<tr>
 				<td style="width:20px;"><input type="checkbox" name="chk" /></td>
@@ -270,9 +278,9 @@
 			</tr>
 		</table>
 
-			<INPUT type="button" value="Nova Linha" onclick="addRow('dataTable')" />
- 			<INPUT type="button" value="Apagar Linha" onclick="deleteRow('dataTable')" />
-    		<INPUT type="submit" name="send" value="Submeter"/>
+			<INPUT type="button" value="Add row" onclick="addRow('dataTable')" />
+ 			<INPUT type="button" value="Delete row" onclick="deleteRow('dataTable')" />
+    		<INPUT type="submit" name="send" value="send"/>
 
 	</form>
 
@@ -290,7 +298,7 @@
 							/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
 
 							INSERT INTO compra
-							VALUES ('', '$data_compra', '$cliente', '');
+							VALUES ('', '$data_compra', '$cliente');
 
 							/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
 							UNLOCK TABLES;
@@ -298,16 +306,22 @@
 							SELECT last_insert_id() into @lastid;
 							";
 			
+
+
 			$count = 0;
 			//contagem de linhas na tabela detalhes, o uso do "preco" poderia ser substituido por "qtd", "desconto"
 			$count = count($_POST['preco']) - 1;
 
 
-			$preco_total = 0;
+			//bloqueamento da tabela detalhes_compra, compra
+			#$sql.="LOCK TABLES `detalhes_compra` WRITE;
+			#	/*!40000 ALTER TABLE `detalhes_compra` DISABLE KEYS */;
+			#	/*!40000 ALTER TABLE `produtos` DISABLE KEYS */;";
+
+
 			for($i = 0; $i <= $count; $i++)
 			{
 				// Utilização de um array de inputs com o mesmo nome, por exemplo "qtd[]"
-				
 				$produto = mysqli_real_escape_string($mysqli, $_POST['produto'][$i]);
 				$qtd = mysqli_real_escape_string($mysqli, $_POST['qtd'][$i]);
 				$preco = mysqli_real_escape_string($mysqli, $_POST['preco'][$i]);
@@ -321,25 +335,17 @@
 	  			$sql.="UPDATE produtos
 	  					SET quantidade = quantidade - '$qtd'
 	  					WHERE id_produto = '$produto';";
+			}
 
-	  			//calculo do preço total de cada compra
-	  			$preco_total = $preco_total + ($preco - ($preco*($desconto/100))) * $qtd;
+			# $sql.="/*!40000 ALTER TABLE `detalhes_compra` ENABLE KEYS */;
+			#		/*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
+			#			UNLOCK TABLES;";
 
-	  		}
-			
-	  		$sql.="UNLOCK TABLES;";
-
-	  		//inserção do preço total de cada compra
-	  		$sql.="UPDATE compra 
-	  				SET preco_total = '$preco_total'
-	  				WHERE id_compra = @lastid;
-	  				";
+			$sql.="UNLOCK TABLES;";
 
 			if($mysqli->multi_query($sql) === TRUE)
 			{
 				echo "<h2>Compra(s) adicionada(s) com sucesso!</h2>";
-				echo "Preço Total: ".$preco_total." €";
-				echo $compra;
 			}
 			else
 			{

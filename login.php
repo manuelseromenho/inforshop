@@ -46,6 +46,15 @@
 						//echo "<script> alert('Sucesso ao fazer login.');window.location.href='index.php';</script>";
 						echo "<script>window.location.href='index.php';</script>";	
 					}
+					else
+					{
+						echo "<script> alert('ERRO. Password ou Utilizador inválidos!') </script>";
+					}
+
+				}
+				else
+				{
+					echo "<script> alert('ERRO. Password ou Utilizador inválidos!') </script>";
 				}
 				exit();
 			}

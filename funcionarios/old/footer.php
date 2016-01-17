@@ -1,10 +1,4 @@
 <html>
-<head>
-	<title> INFORSHOP </title>
-	<!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
-	<link rel="shortcut icon" type="image/png" href="imagens/favicon.ico"/>
-	<meta charset='utf-8'>  
-</head>
 <body>
 
 <!-- ****************** FOOTER *************** -->
@@ -12,11 +6,12 @@
 		<p class="footer"> Hoje,  
 			<script language="JavaScript"> 
 				var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-				var day = currentDate.getDate();
+				//var day = currentDate.getDate();
 				var month = currentDate.getMonth() + 1;
 				var year = currentDate.getFullYear();
 
 				var currentTime = new Date()
+				var day = currentTime.getDate();
 				var hours = currentTime.getHours()
 				var minutes = currentTime.getMinutes()
 
@@ -27,7 +22,7 @@
 		</p> <!-- data & hora -->
         Powered by <a href="http://www.ualg.pt/home/pt/curso/1684">UAlg - ISE - LTIC 2015</a>
 
-        <p><a href="logout.php"> Logout </a> </p>
+        <p><a href="../logout.php"> Logout </a> </p>
     </div>
 </body>
 </html>

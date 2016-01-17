@@ -57,7 +57,7 @@
 
 		<form action="pesquisarCliente.php" method="POST">
 			<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Pesquisa de Clientes </h2> </td> </tr>
-			<tr> <td> <p class="form"> ID do Cliente: </p> </td> <td> <p> <input type="text" name="idCliente" class="selected"> </p> </td> </tr>
+			<tr> <td> <p class="form"> ID ou Nome do Cliente: </p> </td> <td> <p> <input type="text" name="idCliente" class="selected"> </p> </td> </tr>
 			<tr bgcolor="#c1c1ff">  <td colspan="2"> <input type="submit" value="Pesquisar" name="pesquisar" class="button"> </td> </tr>
 		</form>
 	</table>
@@ -89,7 +89,8 @@
 		{
 			$sql = "SELECT id_Cliente, nome, morada, telefone, email, nif
 					FROM clientes 
-					WHERE id_Cliente = '$id'";
+					WHERE id_Cliente = '$id'
+					OR nome LIKE '%$id%'";
 		}
 	}	
 		
@@ -110,9 +111,7 @@
 			{
 				$offset_count = $offset_count + 1;
 				echo "<tr>";
-				echo "<td> <p class='label'>";
-				printf ("%s", $id);
-				echo "</p> </td> ";
+				echo "<td> <p class='label'> $id </p> </td> ";
 				echo "<td> <p class='label'> $nome </p> </td> ";
 				echo "<td> <p class='label'> $morada </p> </td> ";
 				echo "<td> <p class='label'> $telefone </p> </td>";

@@ -8,21 +8,19 @@
 <?php
 	require("../ligacaoBD.php");
 
-	$idFunc = $_GET['idFunc'];
+	$idFunc = intval($_GET['idFunc']);
 
 	if($idFunc == null)
 	{
 		$sql = "SELECT id_funcionario, nome, morada, telefone, nif, email, data_nascimento, data_entrada 
 		FROM funcionarios 
-		ORDER BY id_funcionario ASC";
+		ORDER BY id_funcionario";
 	}
 	else
 	{
 		$sql = "SELECT id_funcionario, nome, morada, telefone, nif, email, data_nascimento, data_entrada 
 		FROM funcionarios 
-		WHERE id_funcionario = '$idFunc'
-		OR  nome LIKE '%$idFunc%'
-		ORDER BY id_funcionario ASC";
+		WHERE id_funcionario = '$idFunc'";
 	}
 
 
@@ -40,7 +38,9 @@
 		while ($stmt->fetch()) 
 		{
 			echo "<tr>";
-			echo "<td> <p class='label'> $id </p> </td> ";
+			echo "<td> <p class='label'>";
+			printf ("%s", $id);
+			echo "</p> </td> ";
 			echo "<td> <p class='label'> $nome </p> </td> ";
 			echo "<td> <p class='label'> $morada </p> </td> ";
 			echo "<td> <p class='label'> $telefone </p> </td>";

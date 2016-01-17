@@ -14,6 +14,7 @@
 <head>
 
 	<title> INFORSHOP </title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
 	<meta charset="utf-8">  
 	<script>
@@ -81,7 +82,7 @@
 			if(isset($_POST['pesquisar'])) 
 			{
 				
-					$id_cliente = $_POST["id_cliente"];
+					//$id_cliente = $_POST["id_cliente"];
 
 					if (array_key_exists('pesquisar', $_POST))
 					{
@@ -89,21 +90,33 @@
 					} 
 					else 
 					{
-						$id_cliente = "";			
+						$id_cliente = null;			
 					}
 				
 
+				//$id_cliente = $_POST["id_cliente"];
+
+				if($id_cliente == null )
+				{
+					$sql = "SELECT a.id_Assistencia, a.descricao_assistencia, a.descricao_equipamento, a.data_entrada, a.data_saida, ue.id_ue, ue.id_estado, e.estado, ue.id_servico, s.tipo_servico, i.id_instal, i.id_produto, p.nome_produto, i.quantidade, a.valor_total, a.id_cliente, c.nome, a.id_funcionario, f.nome
+							FROM assistencias as a, clientes as c, funcionarios as f, usados_efetuados as ue, servicos as s, estados as e, instalacao as i, produtos as p
+							ORDER BY a.id_assistencia ASC";
+				}
+				else
+				{
 					$sql = "SELECT a.id_Assistencia, a.descricao_assistencia, a.descricao_equipamento, a.data_entrada, a.data_saida, ue.id_ue, ue.id_estado, e.estado, ue.id_servico, s.tipo_servico, i.id_instal, i.id_produto, p.nome_produto, i.quantidade, a.valor_total, a.id_cliente, c.nome, a.id_funcionario, f.nome
 							FROM assistencias as a, clientes as c, funcionarios as f, usados_efetuados as ue, servicos as s, estados as e, instalacao as i, produtos as p
 							WHERE a.id_cliente=c.id_cliente 
 							AND a.id_funcionario=f.id_funcionario 
-							AND c.id_cliente LIKE '%$id_cliente'
+							/*AND c.id_cliente LIKE '%$id_cliente'*/
+							AND c.id_cliente = '$id_cliente'
 							AND ue.id_estado=e.id_estado
 							AND ue.id_servico=s.id_servico
 							AND ue.id_assistencia=a.id_assistencia
 							AND ue.id_ue=i.id_ue
 							AND i.id_produto=p.id_produto
 							ORDER BY a.id_assistencia ASC";
+				}
 
 
 

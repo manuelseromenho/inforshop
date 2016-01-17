@@ -30,7 +30,7 @@
 
 
 
-			<table class="procura">
+			<table>
 				<form action="adicionarFunc.php" method="POST">
 					<tr bgcolor="#c1c1ff"> 
 						<td colspan="2"> 
@@ -40,13 +40,13 @@
 					 
 
 
-					<tr> <td> <p class="label"> Nome: </p> </td> 					<td> <p> <input type="text" name="nome" class="selected"> </p> </td> </tr>
-			        <tr> <td> <p class="label"> Morada: </p> </td> 					<td> <p> <input type="text" name="morada" class="selected"> </p> </td> </tr>
-			        <tr> <td> <p class="label"> Telefone: </p> </td> 				<td> <p> <input type="text" name="telefone" class="selected" maxlength="9"> </p> </td> </tr>
-			    	<tr> <td> <p class="label"> NIF: </p> </td>						<td> <p> <input type="text" name="nif" class="selected" maxlength="9"> </p> </td> </tr>
-			    	<tr> <td> <p class="label"> E-mail: </p> </td> 					<td> <p> <input type="text" name="email" class="selected"> </p> </td> </tr>
-			    	<tr> <td> <p class="label"> Data Nascimento: </p> </td>			<td> <p> <input type="date" name="dataN" id="dataN" class="date" class="selected"> </p> </td> </tr>
-			    	<tr> <td> <p class="label"> Data Entrada ao Serviço: </p> </td>	<td> <p> <input type="date" name="dataE" id="dataE" class="date" class="selected"> </p> </td> </tr>
+					<tr> <td> <p class="label"> Nome: </p> </td> 					<td> <p> <input type="text" name="nome" class="input"> </p> </td> </tr>
+			        <tr> <td> <p class="label"> Morada: </p> </td> 					<td> <p> <input type="text" name="morada" class="input"> </p> </td> </tr>
+			        <tr> <td> <p class="label"> Telefone: </p> </td> 				<td> <p> <input type="text" name="telefone" class="input" maxlength="9"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> NIF: </p> </td>						<td> <p> <input type="text" name="nif" class="input" maxlength="9"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> E-mail: </p> </td> 					<td> <p> <input type="text" name="email" class="input"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> Data Nascimento: </p> </td>			<td> <p> <input type="date" name="dataN" id="dataN" class="date"> </p> </td> </tr>
+			    	<tr> <td> <p class="label"> Data Entrada ao Serviço: </p> </td>	<td> <p> <input type="date" name="dataE" id="dataE" class="date"> </p> </td> </tr>
 				
 
 					<tr bgcolor="#c1c1ff"> 

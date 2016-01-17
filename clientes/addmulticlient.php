@@ -110,7 +110,7 @@
  			<INPUT type="button" value="Delete row" onclick="deleteRow('dataTable')" />
     		<INPUT type="submit" name="send" value="send"/>
 
-		</form>
+	</form>
 
 		
 
@@ -120,6 +120,7 @@
 			{
 			
 				$count = 0;
+				//contagem de linhas na tabela detalhes
 				$count = count($_POST['nome']) - 1;
 				$sql="";
 				for($i = 0; $i <= $count; $i++)
@@ -151,21 +152,6 @@
 				mysqli_close($mysqli);
 			}
 		
-			
-
-			 
-			
-
-
-
-
-
-
-		
-
-
-
-
 		?>
 
 	</div>

@@ -27,7 +27,7 @@
 		<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Pesquisa de Serviços </h2> </td> </tr>
 		<form action="pesquisarServico.php" method="POST">
 			<tr>
-				<td> <p class="form"> ID do Serviço: </p> </td> 
+				<td> <p class="form"> ID ou Tipo do Serviço: </p> </td> 
 				<td> <p> <input type="text" name="id_servico" class="selected">	</p> </td> 
 			</tr>
 			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" value="pesquisar" name="pesquisar" class="button"> </td> </tr>
@@ -61,7 +61,8 @@ if(isset($_POST['pesquisar']))
 	{
 		$sql = "SELECT id_servico, tipo_servico, preco, tempo_estimado 
 		FROM servicos
-		WHERE id_servico = '$id'";
+		WHERE id_servico = '$id'
+		OR tipo_servico LIKE '%$id%'";
 	}
 
 	if ($stmt = $mysqli->prepare($sql)) 
@@ -78,12 +79,10 @@ if(isset($_POST['pesquisar']))
 		while ($stmt->fetch()) 
 		{
 			echo "<tr>";
-			echo "<td> <p class='label'>";
-			printf ("%s", $id);
-			echo "</p> </td> ";
+			echo "<td> <p class='label'> $id </p> </td> ";
 			echo "<td> <p class='label'> $tipo_servico </p> </td> ";
 			echo "<td> <p class='label'> $preco € </p> </td> ";
-			echo "<td> <p class='label'> $tempo_estimado </p> </td>";
+			echo "<td> <p class='label'> $tempo_estimado min </p> </td>";
 			echo "<td class='img'> <a href='editarServico.php?id=$id&tipo_servico=$tipo_servico&preco=$preco&tempo_estimado=$tempo_estimado'> <img src='../imagens/edit.png' title='Editar Serviço'> </a> </td> ";
 			echo "<td class='img'> <a href='eliminarServico.php?id=$id'> <img src='../imagens/trash.png' title='Eliminar Serviço'> </a> </td> ";
 			echo "</tr>";

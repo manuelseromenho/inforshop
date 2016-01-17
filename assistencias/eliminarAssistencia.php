@@ -8,39 +8,27 @@
 	}
 
 	require("../ligacaoBD.php");
-?>
 
-<html>
-<head>
-	<title> INFORSHOP </title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
-	<meta charset='utf-8'>  
-</head>
-<body>
-	<!-- ************ HEADER ************** -->
-	<?php include('header.php') ?>
-	<!-- ***************** BODY *****************-->
-	<div class="container">
-<?php
 	$id = $_GET["id"];
+	$qtd = $_GET['qtd'];
+	$id_produto = $_GET['id_produto'];
 	
-	$sql = "DELETE FROM assistencias WHERE id_Assistencia='$idA'";
-	if ($stmt = $con->prepare($sql)) 
+	$sql = "DELETE FROM assistencias WHERE id_assistencia='$id'";
+	//if ($stmt = $mysqli->prepare($sql)) 
+	if (mysqli_multi_query($mysqli, $sql))
 	{
-		$stmt->execute();
-		$stmt->close(); // close statement
-		echo ("<h2>Assistência eliminada com sucesso!</h2>");
+		//$stmt->execute();
+		//$stmt->close(); // close statement
+		//$sql2 = "UPDATE produtos SET quantidade=quantidade+$qtd WHERE id_produto='$id_produto'";
+		//if (mysqli_multi_query($mysqli, $sql2))
+		//{
+			echo "<h2> Assistência eliminada com sucesso! </h2>";
+		//}
 	}
 	else
 	{ 
-		echo mysqli_error($con);
+		echo mysqli_error($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
-	</div>
-	<!-- ****************** FOOTER *************** -->
-	<?php include("footer.php"); ?>
-</body>
-</html>

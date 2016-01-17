@@ -38,15 +38,11 @@
 		if ($mysqli->query($sql) === TRUE) 
 		{
 
-			echo "<script type=\"text/javascript\"> 
-				       window.location=\"sucesso.php\";
-				  </script>";
+			echo "<script type=\"text/javascript\"> window.location=\"sucesso.php\"; </script>";
 		}
 		else
 		{
-			echo "<script type=\"text/javascript\">
-				alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\");
-			</script>";
+			echo "<script type=\"text/javascript\"> alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\"); </script>";
 
 		}
 	}
@@ -69,10 +65,10 @@
 	<form action="editarServico.php" method="POST">
 		<tr bgcolor="#c1c1ff"> <td colspan="3"> <h2> Editar um Serviço </h2> </td> </tr>
 	 	
-	 	<tr> <td> <p class="label"> ID Serviço: </p> </td> 		<td> <p> <input type="text" name="id" value="<?php $id=$_GET['id']; echo $id; ?>" class="input" readonly="readonly"> </p> </td> </tr>
-    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo_servico" value="<?php $tipo_servico=$_GET['tipo_servico']; echo $tipo_servico; ?>" class="input" required> </p> </td> </tr>
-       	<tr> <td> <p class="label"> Preço Serviço: </p> </td>	<td> <p> <input type="text" name="preco" value="<?php $preco=$_GET['preco']; echo $preco; ?>" class="input" required> </p> </td> </tr>
-       	<tr> <td> <p class="label"> Tempo Estimado: </p> </td> 	<td> <p> <input type="text" name="tempo_estimado" value="<?php $tempo_estimado=$_GET['tempo_estimado']; echo $tempo_estimado; ?>" class="input"> </p> </td> </tr>
+	 	<tr> <td> <p class="label"> ID Serviço: </p> </td> 		<td> <p> <input type="text" name="id" value="<?php $id=$_GET['id']; echo $id; ?>" class="selected" readonly="readonly"> </p> </td> </tr>
+    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo_servico" value="<?php $tipo_servico=$_GET['tipo_servico']; echo $tipo_servico; ?>" class="selected" required> </p> </td> </tr>
+       	<tr> <td> <p class="label"> Preço Serviço: (€) </p> </td>	<td> <p> <input type="text" name="preco" value="<?php $preco=$_GET['preco']; echo $preco; ?>" class="selected" required> </p> </td> </tr>
+       	<tr> <td> <p class="label"> Tempo Estimado: </p> </td> 	<td> <p> <input type="text" name="tempo_estimado" value="<?php $tempo_estimado=$_GET['tempo_estimado']; echo $tempo_estimado; ?>" class="selected"> </p> </td> </tr>
 		
 		<tr bgcolor="#c1c1ff"> 
 			<td colspan="3"> 

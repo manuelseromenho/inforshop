@@ -63,7 +63,7 @@
 	<?php include("header.php"); ?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
-	<table class="procura">
+	<table class="table">
 	<form action="editarProduto.php" method="POST">
 		<tr bgcolor="#c1c1ff"> <td colspan="3"> <h2> Editar um Produto </h2> </td> </tr>
 	 	
@@ -116,28 +116,22 @@
     		<td> <p class="label"> Subcategoria</p> </td> 
     		<td>
     			<p class='label'>
-    				<select name='id_sub' class='selected' id="txtHint" required>
+    				<select name='idSub' class='selected' id="txtHint" required>
 	    				<?php
-
 	    					$sql_subcategorias= "SELECT s.id_subcategoria, s.nome_subcategoria 
 	    					FROM subcategorias as s, categorias as c 
 							WHERE s.id_categoria = c.id_categoria AND s.id_categoria = '$id_cat_'";
 	
-							if ($stmt2 = $mysqli->prepare($sql_subcategorias))
-							{
+							if ($stmt2 = $mysqli->prepare($sql_subcategorias)) {
 								$stmt2->execute();						
 								$stmt2->bind_result($idS, $sub);
 
-								while ($stmt2->fetch())
-								{	
-									if($id_sub == $idS)
-									{
-										echo "<option value='$id_sub' selected>  $sub</option>";
-										$idS = $id_sub;
-									}
-									else
-									{
-										echo "<option value='$idS'>  $sub </option>";
+								while ($stmt2->fetch()) {	
+									if($id_sub == $idSub) {
+										echo "<option value='$id_sub' selected> $sub </option>";
+										$idSub = $id_sub;
+									} else {
+										echo "<option value='$id_sub'>  $sub </option>";
 									}									
 								}
 							}	

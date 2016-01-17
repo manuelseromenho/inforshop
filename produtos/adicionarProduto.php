@@ -60,77 +60,6 @@
 	<?php include("header.php"); ?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
-
-	<?php
-	
-	$select = "SELECT * FROM produtos";
-
- 	if(isset($_POST['adicionar']))
-	{
-		//var_dump($_POST);
-		$idP = mysqli_insert_id();
-		$nome = mysqli_real_escape_string($mysqli, $_POST["nome"]); 
-		$numSerie = mysqli_real_escape_string($mysqli, $_POST["numSerie"]);
-		$cod = mysqli_real_escape_string($mysqli, $_POST["cod"]);
-		$peso = mysqli_real_escape_string($mysqli, $_POST["peso"]);
-		$quantidade = mysqli_real_escape_string($mysqli, $_POST["quantidade"]);
-		$preco = mysqli_real_escape_string($mysqli, $_POST["preco"]);
-		//$idCat = mysqli_real_escape_string($mysqli, $_POST["idCat"]);
-		$idSub = mysqli_real_escape_string($mysqli, $_POST["idSub"]);
-		$idM = mysqli_real_escape_string($mysqli, $_POST["idM"]);
-		
-		$sql = "INSERT INTO produtos 
-		VALUES (
-			'$idP',
-			'$nome', 
-			'$numSerie', 
-			'$cod',
-			'$peso', 
-			'$quantidade', 
-			'$preco',
-			'$idSub', 
-			'$idM')";
-				
-		if (mysqli_multi_query($mysqli, $sql))
-		{
-			//echo "<script> alert('Cliente inserido com sucesso!') ";
-
-			$sql = "SELECT * 
-			FROM produtos 
-			ORDER BY id_produto 
-			DESC LIMIT 1";
-			//$result = $mysqli->query($sql);
-
-			//if ($result->num_rows > 0) 
-			if($result = $mysqli->query($sql))
-			{
-		    	// output data of each row
-			    while($row = $result->fetch_assoc()) 
-			    {
-			      	//echo "<script> alert(\"ID Produto: ".$row["id_produto"].". Descrição Produto: " .$row["nome_produto"]. "\");</script>";
-			      	//echo "<script type=\"text/javascript\"> 
-				       					//window.location=\"sucesso.php\";
-				       		// </script>";
-
-				   
-			    }
-			    		echo ("<h2> Produto Adicionado com sucesso! </h2>");
-			    		echo ("<script>document.getElementById('add_prod_table').style.visibility='false'</script>");
-			    $result->close();
-			} 
-			else 
-			{
-			    echo "<script> alert('0 results') </script>";
-			}
-		}
-		else
-		{
-			echo "ERROR: " .$sql. "<br>" . $mysqli->error;
-		}
-		
-	}
-
-?>
 	<table class="procura" id="add_prod_table" name="add_prod_table">
 	<form action="adicionarProduto.php" method="POST">
 		<tr bgcolor="#c1c1ff"> 
@@ -141,9 +70,9 @@
 	 	<tr> <td> <p class="label"> Descrição Produto: </p> </td> 	<td> <p> <input type="text" name="nome" class="selected" required> </p> </td></tr>
         <tr> <td> <p class="label"> Número de Série: </p> </td> 	<td> <p> <input type="text" name="numSerie" class="selected" required> </p> </td> </tr>
         <tr> <td> <p class="label"> Código Barras: </p> </td> 		<td> <p> <input type="text" name="cod" class="selected" required> </p> </td> </tr>
-        <tr> <td> <p class="label"> Peso: </p> </td> 		<td> <p> <input type="text" name="peso" class="selected"> </p> </td> </tr>
+        <tr> <td> <p class="label"> Peso: (gr) </p> </td> 		<td> <p> <input type="text" name="peso" class="selected"> </p> </td> </tr>
         <tr> <td> <p class="label"> Quantidade: </p> </td> 				<td> <p> <input type="text" name="quantidade" class="selected"> </p>  </td> </tr>
-		<tr> <td> <p class="label"> Preço: </p> </td> 				<td> <p> <input type="text" name="preco" class="selected"> </p>  </td> </tr>
+		<tr> <td> <p class="label"> Preço: (€) </p> </td> 				<td> <p> <input type="text" name="preco" class="selected"> </p>  </td> </tr>
 	
 
 
@@ -212,6 +141,74 @@
 		<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="adicionar"> </td>
 	</form>
 	</table>
+<?php
+	$select = "SELECT * FROM produtos";
+
+ 	if(isset($_POST['adicionar']))
+	{
+		//var_dump($_POST);
+		$idP = mysqli_insert_id();
+		$nome = mysqli_real_escape_string($mysqli, $_POST["nome"]); 
+		$numSerie = mysqli_real_escape_string($mysqli, $_POST["numSerie"]);
+		$cod = mysqli_real_escape_string($mysqli, $_POST["cod"]);
+		$peso = mysqli_real_escape_string($mysqli, $_POST["peso"]);
+		$quantidade = mysqli_real_escape_string($mysqli, $_POST["quantidade"]);
+		$preco = mysqli_real_escape_string($mysqli, $_POST["preco"]);
+		//$idCat = mysqli_real_escape_string($mysqli, $_POST["idCat"]);
+		$idSub = mysqli_real_escape_string($mysqli, $_POST["idSub"]);
+		$idM = mysqli_real_escape_string($mysqli, $_POST["idM"]);
+		
+		$sql = "INSERT INTO produtos 
+		VALUES (
+			'$idP',
+			'$nome', 
+			'$numSerie', 
+			'$cod',
+			'$peso', 
+			'$quantidade', 
+			'$preco',
+			'$idSub', 
+			'$idM')";
+				
+		if (mysqli_multi_query($mysqli, $sql))
+		{
+			//echo "<script> alert('Cliente inserido com sucesso!') ";
+
+			$sql = "SELECT * 
+			FROM produtos 
+			ORDER BY id_produto 
+			DESC LIMIT 1";
+			//$result = $mysqli->query($sql);
+
+			//if ($result->num_rows > 0) 
+			if($result = $mysqli->query($sql))
+			{
+		    	// output data of each row
+			    while($row = $result->fetch_assoc()) 
+			    {
+			      	//echo "<script> alert(\"ID Produto: ".$row["id_produto"].". Descrição Produto: " .$row["nome_produto"]. "\");</script>";
+			      	//echo "<script type=\"text/javascript\"> 
+				       					//window.location=\"sucesso.php\";
+				       		// </script>";
+
+				   
+			    }
+			    		echo ("<h2> Produto Adicionado com sucesso! </h2>");
+			    		echo ("<script>document.getElementById('add_prod_table').style.visibility='false'</script>");
+			    $result->close();
+			} 
+			else 
+			{
+			    echo "<script> alert('0 results') </script>";
+			}
+		}
+		else
+		{
+			echo "ERROR: " .$sql. "<br>" . $mysqli->error;
+		}
+		
+	}
+?>
 	</div>
 
 	<!-- ****************** FOOTER *************** -->
