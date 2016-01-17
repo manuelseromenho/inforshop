@@ -5,7 +5,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:/login.php");
 		exit;
 	}
 
@@ -19,63 +19,20 @@
 </head>
 <body>
 	
-<?php
-
-	$select = "SELECT * FROM servicos";
-
- 	if(isset($_POST['adicionar']))
-	{
-		$id = mysql_insert_id();
-		$tipo = mysqli_real_escape_string($con, $_POST["tipo"]); 
-		$preco = mysqli_real_escape_string($con, $_POST["preco"]);
-		$tempo = mysqli_real_escape_string($con, $_POST["tempo"]);
-		
-		$sql = "INSERT INTO servicos VALUES ('$id', '$tipo', '$preco', '$tempo')";
-		
-		if (mysqli_multi_query($con, $sql))
-		{
-			//echo "<script> alert('Cliente inserido com sucesso!') ";
-
-			$sql = "SELECT * FROM servicos ORDER BY id_Servico DESC LIMIT 1";
-			$result = $con->query($sql);
-
-			if ($result->num_rows > 0) 
-			{
-		    	// output data of each row
-			    while($row = $result->fetch_assoc()) 
-			    {
-			        echo "<script> alert('ID Serviço: ".$row["id_Servico"].". Tipo Serviço: " .$row["tipoServico"]. "') </script>";
-			    }
-			} 
-			else 
-			{
-			    echo "<script> alert('0 results') </script>";
-			}
-		}
-		else
-		{
-			echo "ERROR: " .$sql. "<br>" . $con->error;
-		}
-		
-	}
-		
-	$con->close();
-?>
-
 	<!-- ************ HEADER ************** -->
 	<?php include("header.php"); ?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
 
-		<table>
+		<table class="procura">
 			<form action="adicionarServico.php" method="POST">
 				<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Adicionar novo Serviço </h2> </td> </tr>
 				 
-		    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo" class="input"> </p> </td></tr>
-		        <tr> <td> <p class="label"> Preço: </p> </td> 			<td> <p> <input type="text" name="preco" class="input"> </p> </td> </tr>
-		        <tr> <td> <p class="label"> Tempo Estimado: </p> </td> 	<td> <p> <input type="text" name="tempo" class="input"> </p>  </td> </tr>
+		    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo_servico" class="selected"> </p> </td></tr>
+		        <tr> <td> <p class="label"> Preço: (€) </p> </td> 			<td> <p> <input type="text" name="preco" class="selected"> </p> </td> </tr>
+		        <tr> <td> <p class="label"> Tempo Estimado: (min) </p> </td> 	<td> <p> <input type="text" name="tempo_estimado" class="selected"> </p>  </td> </tr>
 				
-				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="Adicionar"> </td>
+				<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="adicionar" class="button" value="adicionar"> </td>
 			</form>
 		</table>
 	</div>
@@ -85,3 +42,74 @@
 
 </body>
 </html>
+
+<?php
+
+	if(isset($_POST['adicionar']))
+	{
+		if (array_key_exists('adicionar',$_POST))
+		{
+			$sql="INSERT INTO servicos SET 			
+						tipo_servico = ?, 
+						preco = ?,
+						tempo_estimado = ?";
+
+			
+			
+			//VERIFICAÇÃO DA INTRODUÇÃO DE VALORES NULOS NO FORMULARIO
+			if($_POST['tipo_servico'] == '') 
+			{
+				$tipo_servico = null;
+				echo "<br>Tipo de Serviço não pode estar vazio";
+			}
+			else $tipo_servico = $_POST['tipo_servico'];
+
+			if($_POST['preco'] == '') 
+			{
+				$preco = null;
+				echo "<br>Preço não pode estar vazio";
+
+			}
+			else $preco = $_POST['preco'];
+
+			if ($stmt = $mysqli->prepare($sql))
+			{
+				$stmt->bind_param('sss'
+				, $tipo_servico
+				, $preco
+				, $_POST['tempo_estimado']
+				);
+
+				if($stmt->execute())
+				{
+					echo "<script type=\"text/javascript\"> 
+				       					window.location=\"sucesso.php\";
+				       		 </script>";
+				}
+				else
+				{
+					echo "<br>".mysqli_error($mysqli);
+				}
+			}
+			else
+			{
+				//echo mysqli_error($mysqli);			
+			}					
+
+		}
+		else
+		{
+			mysqli_errno($mysqli) . ": " . mysqli_error($mysqli) . "\n";
+		}
+		
+	}
+	else 
+		{
+				//echo mysqli_errno($mysqli) . ": " . mysqli_error($mysqli) . "\n";
+				//echo "<script> alert('$mysqli->error') </script>";
+			    //echo "<script> alert('Impossivel inserir este registo. TENTE DE NOVO.'); </script>";
+		}
+
+	$stmt->close();
+ 	$mysqli->close();
+?>

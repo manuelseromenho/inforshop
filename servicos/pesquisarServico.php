@@ -3,7 +3,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 	
@@ -26,33 +26,49 @@
 	<table class="procura">
 		<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Pesquisa de Serviços </h2> </td> </tr>
 		<form action="pesquisarServico.php" method="POST">
-			<tr> <td> <p class="form"> ID do Serviço: </p> </td> <td> <p> <input type="text" name="idServico" class="selected"> </p> </td> </tr>
-			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" value="Pesquisar" name="pesquisar" class="button"> </td> </tr>
+			<tr>
+				<td> <p class="form"> ID ou Tipo do Serviço: </p> </td> 
+				<td> <p> <input type="text" name="id_servico" class="selected">	</p> </td> 
+			</tr>
+			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" value="pesquisar" name="pesquisar" class="button"> </td> </tr>
 		</form>
 	</table>
 
 <?php
 
+
 if(isset($_POST['pesquisar']))
 {
-	$idS = $_POST["idServico"];
+	//$id = $_POST["id"];
 	
 	if (array_key_exists('pesquisar', $_POST))
 	{
-		$s = $_POST["idServico"];		
+		$id = $_POST["id_servico"];		
 	}
 	else
 	{
-		$s = "";			
+		$id = "";			
 	} 
 
 
-	$sql = "SELECT id_Servico, tipoServico, preco, tempoEstimado FROM servicos WHERE id_Servico LIKE '%$idS%'";
+	if($id == null)
+	{
+		$sql = "SELECT id_servico, tipo_servico, preco, tempo_estimado 
+		FROM servicos
+		ORDER BY id_servico";
+	}
+	else
+	{
+		$sql = "SELECT id_servico, tipo_servico, preco, tempo_estimado 
+		FROM servicos
+		WHERE id_servico = '$id'
+		OR tipo_servico LIKE '%$id%'";
+	}
 
-	if ($stmt = $con->prepare($sql)) 
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
-		$stmt->bind_result($idS, $tipo, $preco, $tempo);
+		$stmt->bind_result($id, $tipo_servico, $preco, $tempo_estimado);
 
 		echo "<br><br><br>";
 
@@ -63,14 +79,12 @@ if(isset($_POST['pesquisar']))
 		while ($stmt->fetch()) 
 		{
 			echo "<tr>";
-			echo "<td> <p class='label'>";
-			printf ("%s", $idS);
-			echo "</p> </td> ";
-			echo "<td> <p class='label'> $tipo </p> </td> ";
+			echo "<td> <p class='label'> $id </p> </td> ";
+			echo "<td> <p class='label'> $tipo_servico </p> </td> ";
 			echo "<td> <p class='label'> $preco € </p> </td> ";
-			echo "<td> <p class='label'> $tempo min</p> </td>";
-			echo "<td class='img'> <a href='editarServico.php?idS=$idS&tipo=$tipo&preco=$preco&tempo=$tempo'> <img src='../imagens/edit.png' title='Editar Cliente'> </a> </td> ";
-			echo "<td class='img'> <a href='eliminarServico.php?idS=$idS'> <img src='../imagens/trash.png' title='Eliminar Cliente'> </a> </td> ";
+			echo "<td> <p class='label'> $tempo_estimado min </p> </td>";
+			echo "<td class='img'> <a href='editarServico.php?id=$id&tipo_servico=$tipo_servico&preco=$preco&tempo_estimado=$tempo_estimado'> <img src='../imagens/edit.png' title='Editar Serviço'> </a> </td> ";
+			echo "<td class='img'> <a href='eliminarServico.php?id=$id'> <img src='../imagens/trash.png' title='Eliminar Serviço'> </a> </td> ";
 			echo "</tr>";
 		}
 		echo "</table>";
@@ -78,7 +92,7 @@ if(isset($_POST['pesquisar']))
 		$stmt->close();
 	}
 }
-$con->close();
+$mysqli->close();
 ?>
 
 	</div>

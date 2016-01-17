@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title> INFORSHOP </title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
 	<meta charset='utf-8'>  
 </head>
@@ -29,7 +29,7 @@
 		  	</li>
 		  	<li class='has-sub'> <a href='../funcionarios/indexFunc.php'> Funcionários </a>
 		  		<ul>
-		  			<li> <a href='../funcionarios/a../funcionarios/dicionarFunc.php'> Adicionar </a> </li>
+		  			<li> <a href='../funcionarios/adicionarFunc.php'> Adicionar </a> </li>
 		  			<li> <a href='../funcionarios/pesquisarFunc.php'> Pesquisar </a> </li>
 		  		</ul>
 		  	</li>

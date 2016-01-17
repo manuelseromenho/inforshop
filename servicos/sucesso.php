@@ -3,7 +3,7 @@
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 
@@ -18,26 +18,14 @@
 </head>
 <body>
 	<!-- ************ HEADER ************** -->
-	<?php include('header.php') ?>
+	<?php
+		include("header.php");
+	?>
 	<!-- ***************** BODY *****************-->
 	<div class="container">
-<?php
-	$id = $_GET["id"];
-	
-	$sql = "DELETE FROM funcionarios WHERE id_funcionario='$id'";
-	if ($stmt = $mysqli->prepare($sql)) 
-	{
-		$stmt->execute();
-		$stmt->close(); // close statement
-		echo ("<h2>Funcionário eliminado com sucesso!</h2>");
-	}
-	else
-	{ 
-		echo mysqli_error ($mysqli);
-	}
 
-	$mysqli->close(); //close connection
-?>
+	<h2>Serviço adicionado/editado com sucesso!</h2>
+
 	</div>
 	<!-- ****************** FOOTER *************** -->
 	<?php include("footer.php"); ?>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+
+<?php
+require("../ligacaoBD.php");
+
+$q_idP = intval($_GET['idP']);
+$sql_idP = "SELECT * FROM produtos WHERE id_Produto = '".$q_idP."'";
+$result = mysqli_query($mysqli, $sql_idP);
+
+echo "<table class='table' width='auto'>";
+while($row = mysqli_fetch_array($result)) {
+    echo "<tr> <td> <h3> Descrição Produto: </h3> </td> <td> <p class='label'> ".$row['descricao']."  </p> </td> </tr>";
+    echo "<tr> <td> <h3> Numero Serie: </h3> </td>  <td> <p class='label'> ".$row['num_serie']." </p> </td> </tr>";
+    echo "<tr> <td> <h3> Código Barras: </h3> </td> <td> <p class='label'> ".$row['cod_barras']." </p> </td> </tr>";
+    echo "<tr> <td> <h3> Stock: </h3> </td> <td> <p class='label'> ".$row['stock']." </p> </td> </tr>";
+    echo "<tr> <td> <h3> Preço: </h3> </td>    <td> <p class='label'> ".$row['preco']." </p> </td> </tr>";
+
+}
+echo "</table>";
+?>
+</body>
+</html>

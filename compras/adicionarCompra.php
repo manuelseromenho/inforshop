@@ -1,144 +1,175 @@
 <?php 
-	session_start(); /* Starts the session */
+	session_start(); // Starts the session 
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 
 	require("../ligacaoBD.php");
-
-	if(isset($_POST["adicionarC"]))
-	{
-		$idC = mysql_insert_id();
-		$nomeC = mysqli_real_escape_string($con, $_POST["nomeC"]); 
-		$morada = mysqli_real_escape_string($con, $_POST["morada"]);
-		$telefone = mysqli_real_escape_string($con, $_POST["telefone"]);
-		$email = mysqli_real_escape_string($con, $_POST["email"]);
-		$nif = mysqli_real_escape_string($con, $_POST["nif"]);
-		
-		$sql = "INSERT INTO clientes VALUES ('$idC', '$nomeC', '$morada', '$telefone', '$email', '$nif')";
-		
-		if (mysqli_multi_query($con, $sql))
-		{
-			//echo "<script> alert('Cliente inserido com sucesso!') ";
-
-			$sql2 = "SELECT * FROM clientes ORDER BY id_Cliente DESC LIMIT 1";
-			$result = $con->query($sql2);
-
-			if ($result->num_rows > 0) 
-			{
-		    	// output data of each row
-			    while($row = $result->fetch_assoc()) 
-			    {
-			        echo "<script> alert('ID Cliente: ".$row["id_Cliente"].". Nome Cliente: " .$row["nomeCliente"]. "') </script>";
-			    }
-			} 
-			else 
-			{
-			    echo "<script> alert('0 results') </script>";
-			}
-		}
-		else
-		{
-			echo "ERROR: " .$sql. "<br>" . $con->error;
-		}
-
-	}
-	else if(isset($_POST["okC"]))
-	{
-		$idC = mysqli_real_escape_string($con, $_POST["idC"]); 
-	}
-
-	if(isset($_POST["adicionarP"]))
-	{
-		$idP = mysql_insert_id();
-		$nomeP = mysqli_real_escape_string($con, $_POST["nomeP"]); 
-		$numSerie = mysqli_real_escape_string($con, $_POST["numSerie"]);
-		$stock = mysqli_real_escape_string($con, $_POST["stock"]);
-		$precoP = mysqli_real_escape_string($con, $_POST["precoP"]);
-		$idSub = mysqli_real_escape_string($con, $_POST["idSub"]);
-		$idM = mysqli_real_escape_string($con, $_POST["idM"]);
-		
-		/*$sql = "INSERT INTO produtos VALUES ($idP, '$nomeP', '$numSerie', '$stock', '$precoP', '$idSub', '$idM')";
-		
-		if (mysqli_multi_query($con, $sql))
-		{
-			//echo "<script> alert('Cliente inserido com sucesso!') ";
-
-			$sql2 = "SELECT * FROM produtos ORDER BY id_Produto DESC LIMIT 1";
-			$result = $con->query($sql2);
-
-			if ($result->num_rows > 0) 
-			{
-		    	// output data of each row
-			    while($row = $result->fetch_assoc()) 
-			    {
-			        echo "<script> alert('ID Produto: ".$row["id_Produto"].". Descrição Produto: " .$row["nomeProduto"]. "') </script>";
-			    }
-			} 
-			else 
-			{
-			    echo "<script> alert('0 results') </script>";
-			}
-		}
-		else
-		{
-			echo "ERROR: " .$sql. "<br>" . $con->error;
-		}*/
-
-	}
-	else if(isset($_POST["okP"]))
-	{
-		$idP = mysqli_real_escape_string($con, $_POST["idP"]);
-	}
-
-	if(isset($_POST["finalizar"]))
-	{
-		$idCompra = mysql_insert_id();
-		$idP = mysqli_real_escape_string($con, $_POST["idP"]); 
-		$idC = mysqli_real_escape_string($con, $_POST["idC"]);
-		$data = mysqli_real_escape_string($con, $_POST["data"]);
-		$total = mysqli_real_escape_string($con, $_POST["total"]);
-		$quantidade = mysqli_real_escape_string($con, $_POST["quantidade"]);
-		
-		$sql = "INSERT INTO compra VALUES ('$idCompra', '$idP', '$idC', '$data', '$quantidade', '$total')";
-		
-		if (mysqli_multi_query($con, $sql))
-		{
-			//echo "<script> alert('Cliente inserido com sucesso!') ";
-
-			$sql2 = "SELECT * FROM compra ORDER BY id_compra DESC LIMIT 1";
-			$result = $con->query($sql2);
-
-			if ($result->num_rows > 0) 
-			{
-		    	// output data of each row
-			    while($row = $result->fetch_assoc()) 
-			    {
-			        echo "<script> alert('ID Compra: ".$row["id_Compra"].") </script>";
-			    }
-			} 
-			else 
-			{
-			    echo "<script> alert('0 results') </script>";
-			}
-		}
-		else
-		{
-			echo "ERROR: " .$sql. "<br>" . $con->error;
-		}
-
-	}
-
+	
 ?>
 <html>
 <head>
 	<title> INFORSHOP </title>
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
-	<meta charset='utf-8'>  
+	<meta charset='utf-8'>
+
+	<!--jquery utilizado para datepicker--> 
+	<link href="../jquery/jquery-ui.css" rel="stylesheet" />
+	<script src="../jquery/jquery.min.js"></script>
+	<script src="../jquery/jquery-ui.js"></script>
+	<script>
+
+
+
+		function addRow(tableID) 
+		{
+		        var table = document.getElementById(tableID);
+		        var rowCount = table.rows.length;
+		        var row = table.insertRow(rowCount);
+		        kl = table.rows.length;
+		        var colCount = table.rows[1].cells.length;
+		        //kc = colCount;
+
+		        for(var i=0; i<colCount; i++) 
+		        {
+		            var newcell = row.insertCell(i);
+		            newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+		            //alert(newcell.childNodes);
+		            switch(newcell.childNodes[0].type) 
+		            {
+		                case "select":
+		                    newcell.childNodes[0].value = "";
+		                    break;
+		                case "text":
+		                    newcell.childNodes[0].value = "";
+		                    break;
+		                case "text":
+		                    newcell.childNodes[0].value = "";
+		                    break;
+		                case "text":
+		                    newcell.childNodes[0].value = "";
+		                    break;
+	                    case "text":
+	                    	newcell.childNodes[0].value = "";
+	                    break;
+		            }
+		        }
+		   }
+	    function deleteRow(tableID) {
+	        try {
+	        var table = document.getElementById(tableID);
+	        var rowCount = table.rows.length;
+	        for(var i=0; i<rowCount; i++) {
+	            var row = table.rows[i];
+	            var chkbox = row.cells[0].childNodes[0];
+	            if(null != chkbox && true == chkbox.checked) {
+	                if(rowCount <= 2) {
+	                    alert("Tem que existir pelo menos uma linha!");
+	                    break;
+	                }
+	                table.deleteRow(i);
+	                rowCount--;
+	                i--;
+	            }
+	        }
+	        }catch(e) {
+	            alert(e);
+	        }
+	    }
+
+
+
+		function showUser(str) 
+		{
+		    if (str == "") {
+		        document.getElementById("txtHint").innerHTML = "";
+		        return;
+		    } else { 
+		        if (window.XMLHttpRequest) {
+		            // code for IE7+, Firefox, Chrome, Opera, Safari
+		            xmlhttp = new XMLHttpRequest();
+		        } else {
+		            // code for IE6, IE5
+		            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		        }
+		        xmlhttp.onreadystatechange = function() {
+		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+		            }
+		        };
+		        xmlhttp.open("GET","getuser.php?idCliente="+str,true);
+		        xmlhttp.send();
+		    }
+		}
+
+		function showProd(str) 
+		{
+		    //var _elements = document.getElementsByName('txtHint1');
+		   	var kl = document.getElementById("dataTable").rows.length - 1;
+		   	//alert(kl);
+		    if (str == "") {
+		        document.getElementById("dataTable").rows[kl].cells[3].innerHTML= "";
+		        return;
+		    } else { 
+		        if (window.XMLHttpRequest) 
+		        {
+		            // code for IE7+, Firefox, Chrome, Opera, Safari
+		            xmlhttp = new XMLHttpRequest();
+		        } else {
+		            // code for IE6, IE5
+		            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		        }
+		        xmlhttp.onreadystatechange = function() {
+		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		            {
+		            	document.getElementById("dataTable").rows[kl].cells[3].innerHTML = xmlhttp.responseText;
+		            }
+		        };
+		        xmlhttp.open("GET","getprod.php?idP="+str,true);
+		        xmlhttp.send();
+		    }
+		}
+
+		function verifyQtd(qtd)
+		{
+		   	var tbl= document.getElementById('dataTable');
+		   	var kl = tbl.rows.length - 1;
+
+		    if (qtd == "") {
+		        document.getElementById('dataTable').rows[kl].cells[5].innerHTML= "";
+		        return;
+		    } else { 
+		        if (window.XMLHttpRequest) 
+		        {
+		            // code for IE7+, Firefox, Chrome, Opera, Safari
+		            xmlhttp = new XMLHttpRequest();
+		           	var prod = tbl.rows[kl].cells[1].firstChild[tbl.rows[kl].cells[1].firstChild.selectedIndex].value;
+		           	//alert (prod);
+		        } else {
+		            // code for IE6, IE5
+		            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		        }
+		        xmlhttp.onreadystatechange = function() 
+		        {
+		            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		            {
+		            	
+		            	document.getElementById('dataTable').rows[kl].cells[5].innerHTML = xmlhttp.responseText;
+		            	
+
+		            }
+		        };
+		        xmlhttp.open("GET","verifyQtd.php?id_produto="+prod+"&qtd="+qtd,true);
+		        xmlhttp.send();
+		    }
+		}
+
+
+	
+	</script>
 </head>
 <body>
 	<!-- ************ HEADER ************** -->
@@ -146,126 +177,191 @@
 	<!-- ***************** BODY *****************-->
 	<div class="container">
 
-	<table class="procura">
-	<form action="adicionarCompra.php" method="POST">
-		<tr bgcolor="#c1c1ff"> <td colspan="4"> <h2> Fazer uma nova compra </h2> </td></tr>
-		 
-		<tr> 
-			<td> <p class="label">ID Cliente: * </p> </td> 
-			<td>
-<?php
-	$sql = "SELECT id_Cliente, nome, morada, telefone, email, nif FROM clientes";
-
-	if ($smtp = $con->prepare($sql))
-	{
-		$smtp->execute();						
-		$smtp->bind_result($idC, $nomeC, $morada, $telefone, $email, $nif);
-		
-		//echo "<p class='label'> <select name='nomeCliente' value='$_SESSION['valor']'>";
-		echo "<p class='label'> <select name='idC' class='selected'>";
-
-		while ($smtp->fetch())
-		{	
-			if($idC != null)
-			{
-				//echo "<option value='$idC'> $nomeC ($idC) </option>\n";
-				echo "<option value='$idC'> $nomeC ($idC) </option>\n";
-			}
-			else
-			{
-				echo "<option value='$idC' selected> $nomeC ($idC) </option>\n";				
-			}
-		}
-		echo "</select>";
-
-	}
-?>
-			</td>
-			<td> <input type="image" src="../imagens/load.png" name="cliente" value="carrega"> </td>
-
-<?php
-if(isset($_POST["cliente"]))
-{
-	printf ("%s", $idC);
-	$_SESSION['valor'] = $_GET['nomeCliente']; 
-	//$idC = $_POST["idC"];
-	echo $idC;
-
-}
-			?>
-
-		</tr>
-	   		
-	   		<!--<tr> <td> </td> <td> <p class="label"> Nome: </p> </td>		<td colspan="2"> <p> <input type="text" name="nomeC" value="<?php $nomeC=$_GET['nomeC']; echo $nomeC; ?>" class="input"> </p>   </td> </tr>
-		    <tr> <td> </td> <td> <p class="label"> Morada: </p> </td>	<td colspan="2"> <p> <input type="text" name="morada" value="<?php $morada=$_GET['morada']; echo $morada; ?>" class="input"> </p> </td>   </tr>
-		    <tr> <td> </td> <td> <p class="label"> Telefone: </p> </td>	<td colspan="2"> <p> <input type="text" name="telefone" value="<?php $telefone=$_GET['telefone']; echo $telefone; ?>" class="input"> </p> </td> </tr>
-		    <tr> <td> </td> <td> <p class="label"> E-mail: </p> </td>	<td colspan="2"> <p> <input type="text" name="email" value="<?php $email=$_GET['email']; echo $email; ?>" class="input"> </p> </td></tr>
-		    <tr> <td> </td> <td> <p class="label"> NIF: </p> </td>		<td colspan="2"> <p> <input type="text" name="nif" value="<?php $nif=$_GET['nif']; echo $nif; ?>" class="input"> </p> </td> </tr>
- 			<tr>
- 				<td> </td>
- 				<td> <input type="button" name="okC" value="OK" class="button"></td>
- 				<td  colspan="2"> <input type="button" name="adicionarC" value="Adicionar Cliente" class="button"> </td>
- 			</tr>-->
-
-			<tr> 
-				<td> <p class="label"> ID Produto: </td>
-				<!--<td colspan="2">-->
-				<td>
-<?php
-	$sql = "SELECT id_Produto, nomeProduto, num_Serie, cod_barras, stock, preco, id_Subcategoria, id_Marca FROM produtos";
-
-	if ($smtp = $con->prepare($sql))
-	{
-		$smtp->execute();						
-		$smtp->bind_result($idP, $nomeP, $numSerie, $cod, $stock, $precoP, $idSub, $idM);
-
-		echo "<p class='label'> <select name='idP' class='selected'>";
-		while ($smtp->fetch())
-		{			
-			if($idP != null)
-			{
-				echo "<option value='$idP'> $nomeP ($idP)</option>\n";
-			}
-			else
-			{
-				echo "<option value='$idP' selected> $nomeP ($idP)</option>\n";				
-			}
-		}
-		echo "</select> </p> ";
-	}
-?>
-				</td>
-				<td> <input type="image" src="../imagens/load.png" name="cliente" value="carrega"> </td>
+	
+	<form action="adicionarCompra.php" method="POST" onkeydown="return !(event.keyCode==13)">
+		<table class="procura">
+			<tr bgcolor="#c1c1ff"> 
+				<td colspan="2"> <h2> Fazer uma nova compra </h2></td>
 			</tr>
+			<tr> 
+				<td> <p class="label"> Nome do Cliente: </p> </td> 
+				<td>
+					<?php
+						$sql = "SELECT id_Cliente, nome
+								FROM clientes
+								ORDER BY id_Cliente ASC";
 
-			<!--<tr> <td> </td> <td> <p class="label"> Descrição: </p> </td>		<td colspan="2"> <p> <input type="text" name="nomeP" class="input"> </p> </td> </tr>
-			<tr> <td> </td> <td> <p class="label"> Categoria: </p> </td>		<td colspan="2"> <p> <input type="text" name="categoria" class="input"> </p> </td> </tr>
-			<tr> <td> </td> <td> <p class="label"> Subcategoria: </p> </td>		<td colspan="2"> <p> <input type="text" name="subcategoria" class="input"> </p> </td> </tr>
-			<tr> <td> </td> <td> <p class="label"> Marca: </p> </td>			<td colspan="2"> <p> <input type="text" name="marca" class="input"> </p> </td> </tr>
-			<tr> <td> </td> <td> <p class="label"> Stock: </p> </td>			<td colspan="2"> <p> <input type="text" name="stock" class="input"> </p> </td> </tr>
-			<tr> <td> </td> <td> <p class="label"> Numero Serie: </p> </td>		<td colspan="2"> <p> <input type="text" name="numSerie" class="input"> </p> </td> </tr>
-			<tr> <td> </td> <td> <p class="label"> Preço: </p> </td>			<td colspan="2"> <p> <input type="text" name="preco" class="input"> </p> </td> </tr>
-			 <tr>
-			 	<td> </td>
- 				<td> <input type="button" name="okP" value="OK" class="button"> </td>
- 				<td colspan="2"> <input type="button" name="adicionarP" value="Adicionar Carrinho" class="button"> </td>
- 			</tr>
- 			-->
+						if ($smtp = $mysqli->prepare($sql))
+						{
+							$smtp->execute();						
+							$smtp->bind_result($idCliente, $nomeC);
+							
+							echo "<p class='label'> <select name='idCliente' class='selected' onchange='showUser(this.value)'>";
+							echo "<option value='$idCliente' selected> Seleccione um cliente </option>";
+							while ($smtp->fetch())
+							{	
+								echo "<option value='$idCliente'> $nomeC ($idCliente) </option>";						
+							}
+							echo "</select></td>";
 
-			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td colspan="2"> <p> <input type="date" name="data" class="selected"> </p>  </td> </tr>
-		    <tr> <td> <p class="label"> Quantidade: </p> </td> 		<td colspan="2"> <p> <input type="text" name="quantidade" class="selected"> </p> </td> </tr>
-		    <!--<tr> <td> <p class="label"> Preço Total: * </p> </td> 		<td colspan="2"> <p> <input type="text" value="<?php $preco=$_POST['preco']; echo $preco; ?>" name="totalPreco" class="selected"> </p> </td> </tr>-->
-		    <tr> <td> <p class="label"> Preço Total: </p> </td> 		<td colspan="2"> <p> <input type="text" name="total" class="selected"> </p> </td> </tr>
-
-			<tr bgcolor="#c1c1ff"> <td colspan="4"> <input type="submit" name="finalizar" class="button" value="Finalizar Compra" /></td></tr>
-		</form>
+						}
+					?>
+			</tr>
+					
+			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td> <p> <input type="date" name="data" id="data" class="selected" required> </p>  </td> </tr>
 		</table>
+
+		<!--Script para o Datepicker no Firefox, caso não seja nativo-->
+			<script>
+			      var elem = document.createElement('input');
+			      elem.setAttribute('type', 'date');
+			 
+			      if ( elem.type === 'text' ) 
+			      {
+			      	$('#data').datepicker({changeMonth: true, changeYear: true});
+			      	$( "#data" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+			      }
+
+			</script>
+		<!-- ###################################################### -->
+
+		<div id="txtHint"> </div>
+
+
+		<table class="procura" id="dataTable">
+			<tr>
+				<th></th>
+				<th>Produto</th>
+				<th>Qtd</th>
+				<th>Preço (€)</th>
+				<th>Desconto (%)</th>
+			</tr>
+			<tr>
+				<td style="width:20px;"><input type="checkbox" name="chk" /></td>
+				
+						<?php
+							$sql_prod = "SELECT id_produto, nome_produto, quantidade
+									FROM produtos
+									ORDER BY id_produto ASC";
+
+							if ($smtp = $mysqli->prepare($sql_prod))
+							{
+								$smtp->execute();						
+								$smtp->bind_result($idP, $descricao, $qtd);
+
+								//para o firstChild funcionar, o html não pode ter espaços e paragrafos 
+								echo "<td style='width:80px';><select name='produto[]' onchange='showProd(this.value)'><option value='$idP' selected> Seleccione um produto </option>";
+								while ($smtp->fetch())
+								{		
+									echo "<option value='$idP'> $descricao -> QTD($qtd)</option>";
+								}
+								echo "</select></td>";
+							}
+
+						?>
+
+	
+				<td style="width:80px;"><input type="text" name="qtd[]" onchange="verifyQtd(this.value)" required/></td>
+				<td style="width:80px;" >
+					<div name="txtHint1"></div>
+				</td>
+				<td style="width:80px;"><input type="text" name="desconto[]"/></td>
+				<td> <div name="chkQtd"></div></td>
+			</tr>
+		</table>
+
+			<INPUT type="button" value="Nova Linha" onclick="addRow('dataTable')" />
+ 			<INPUT type="button" value="Apagar Linha" onclick="deleteRow('dataTable')" />
+    		<INPUT type="submit" name="send" value="Submeter"/>
+
+	</form>
+
+	<?php
+		
+		if(isset($_POST['send'])) 
+		{
+		
+			$cliente = mysqli_real_escape_string($mysqli, $_POST['idCliente']);
+			$data_compra = mysqli_real_escape_string($mysqli, $_POST['data']);
+			$sql_update = "";
+
+			//bloqueia a tabela compra, escreve a inserção do registo da compra, abre de novo
+			$sql = "LOCK TABLES `compra` WRITE;
+							/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
+
+							INSERT INTO compra
+							VALUES ('', '$data_compra', '$cliente', '');
+
+							/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
+							UNLOCK TABLES;
+
+							SELECT last_insert_id() into @lastid;
+							";
+			
+			$count = 0;
+			//contagem de linhas na tabela detalhes, o uso do "preco" poderia ser substituido por "qtd", "desconto"
+			$count = count($_POST['preco']) - 1;
+
+
+			$preco_total = 0;
+			for($i = 0; $i <= $count; $i++)
+			{
+				// Utilização de um array de inputs com o mesmo nome, por exemplo "qtd[]"
+				
+				$produto = mysqli_real_escape_string($mysqli, $_POST['produto'][$i]);
+				$qtd = mysqli_real_escape_string($mysqli, $_POST['qtd'][$i]);
+				$preco = mysqli_real_escape_string($mysqli, $_POST['preco'][$i]);
+				$desconto = mysqli_real_escape_string($mysqli, $_POST['desconto'][$i]);
+	  
+				//id_detalhe, id_compra(lastid), id_produto, quantidade, desconto
+	  			$sql.="INSERT into detalhes_compra 
+	  					VALUES ('',@lastid, '$produto', '$qtd','$desconto');";
+
+	  			//UPDATE ao Stock
+	  			$sql.="UPDATE produtos
+	  					SET quantidade = quantidade - '$qtd'
+	  					WHERE id_produto = '$produto';";
+
+	  			//calculo do preço total de cada compra
+	  			$preco_total = $preco_total + ($preco - ($preco*($desconto/100))) * $qtd;
+
+	  		}
+			
+	  		$sql.="UNLOCK TABLES;";
+
+	  		//inserção do preço total de cada compra
+	  		$sql.="UPDATE compra 
+	  				SET preco_total = '$preco_total'
+	  				WHERE id_compra = @lastid;
+	  				";
+
+			if($mysqli->multi_query($sql) === TRUE)
+			{
+				echo "<h2>Compra(s) adicionada(s) com sucesso!</h2>";
+				echo "Preço Total: ".$preco_total." €";
+				echo $compra;
+			}
+			else
+			{
+				echo "<br><br><b>MYSQL ERROR:<b><br>";
+				echo mysqli_error($mysqli);
+			}
+			mysqli_close($mysqli);
+
+
+		}
+
+
+	//var_dump ($sql);
+	?>
+
+
 	</div>
 	
 	<!-- ****************** FOOTER *************** -->
 	<?php 
 		include("footer.php"); 
-		mysqli_close($con);
+		mysqli_close($mysqli);
 	?>
 
 </body>

@@ -1,0 +1,93 @@
+<?php session_start() ?>
+
+<?php
+    if (empty($_SESSION['cnt']))
+    {
+        $_SESSION['cnt'] = 0;
+    }
+?>
+
+
+
+<html>
+<head><title></title></head>
+
+<body>
+	<form action="array_test.php" method="POST">
+		<table>
+			<tr>
+				<td>Nome:<input type="text" name="nome"/></td>
+				<td>Morada:<input type="text" name="morada"/></td>
+				<td>Telefone<input type="text" name="telefone"/></td>
+				<td>Email:<input type="text" name="email"/></td>
+				<td>NIF:<input type="text" name="nif"/></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" name="submit" value="adicionar" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
+
+
+
+<?php
+
+$arr = array(
+				array("Nome", "Morada", "Telefone", "Email", "NIF")
+	);
+
+
+//$arr[] = array("Manuel", "Rua da Fonseca", "289000111", "manel@manel.pt", "123123123");
+
+
+if(isset($_POST["submit"]))
+{
+	$_SESSION['cnt']++;
+	echo $_SESSION['cnt'];
+
+	$arrlength++;
+	$arr[] = array($_POST["nome"],$_POST["morada"],$_POST["telefone"],$_POST["email"],$_POST["nif"]);
+
+}
+
+
+	$arrlength = 10;
+	echo $arrlength;
+
+	foreach($arr as $key) 
+	{ 
+	     echo " x ".sizeof($key); 
+	     $arr_col = sizeof($key);
+   	} 
+
+
+
+
+
+
+
+echo "<table border='1'>";
+
+for($x = 0; $x < $arrlength; $x++) 
+{
+	echo "<tr>";
+
+	for($col=0; $col < $arr_col; $col++)
+	{
+		echo "<td>";
+		echo " ";
+    	echo $arr[$x][$col];
+    	echo "</td>";
+	}
+    
+    echo "</tr>";
+}
+
+echo "</table>";
+
+?>

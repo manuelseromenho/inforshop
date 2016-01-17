@@ -21,7 +21,7 @@
 	<!-- ***************** BODY *****************-->
 	<div class="container">
 
-		<table class="produtos">
+		<table class="procura">
 			<tr> <td colspan="2"> <h2> Adicionar uma Marca </h2> </td> </tr>
 			<tr> <td> <p class="label"> Marca </p> </td> <td> <input type="text" name="idSub" class="input"> </td> </tr>
 			<tr> 
@@ -31,7 +31,7 @@
 		</table>
 
 		<br><br><br>
-		<table class="produtos">
+		<table class="procura">
 			<tr> <td colspan="2"> <h2> Adicionar uma Categoria </h2> </td> </tr>
 			<tr> <td> <p class="label"> Categoria </p> </td> <td> <input type="text" name="idSub" class="input"> </td> </tr>
 			<tr> 
@@ -41,7 +41,7 @@
 		</table>
 
 		<br><br><br>
-		<table class="produtos">
+		<table class="procura">
 			<tr> <td colspan="2"> <h2> Adicionar uma Subcategoria </h2> </td> </tr>
 			<tr> <td> <p class="label"> Subcategoria </p> </td> <td> <input type="text" name="subcategoria" class="input"</tr>
 			<tr>
@@ -51,7 +51,7 @@
 	//$sql = "SELECT id_Subcategoria, subcategoria, id_Categoria FROM subcategorias";
 	$sql = "SELECT id_Categoria, categoria FROM categorias";
 	
-	if ($smtp = $con->prepare($sql))
+	if ($smtp = $mysqli->prepare($sql))
 	{
 		$smtp->execute();						
 		$smtp->bind_result($idC, $categoria);

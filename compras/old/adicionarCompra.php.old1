@@ -1,0 +1,166 @@
+<?php 
+	session_start(); // Starts the session 
+
+	if(!isset($_SESSION['user']))
+	{
+		header("location:login.php");
+		exit;
+	}
+
+	require("../ligacaoBD.php");
+
+
+	if(isset($_POST["finalizar"]))
+	{
+		$idCompra = mysql_insert_id();
+		$idCliente = mysqli_real_escape_string($mysqli, $_POST["idCliente"]);
+		$idP = mysqli_real_escape_string($mysqli, $_POST["idP"]); 		
+		$data = mysqli_real_escape_string($mysqli, $_POST["data"]);
+		$quantidade = mysqli_real_escape_string($mysqli, $_POST["quantidade"]);
+		$preco = mysqli_real_escape_string($mysqli, $_POST["preco"]);
+
+		if ($stmt = $mysqli->prepare("INSERT INTO compra (id_Compra, id_Produto, id_Cliente, dataCompra, quantidade, precoTotal)
+									VALUES ($idCompra, $idP, $idCliente, $data, $quantidade, $preco)"))
+		{
+			$stmt->execute();
+			echo "<script> alert('Compra inserida com sucesso!'); </script>";
+		} else {
+			echo mysqli_error($mysqli);			
+		}							
+	}
+?>
+<html>
+<head>
+	<title> INFORSHOP </title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="shortcut icon" type="image/png" href="../imagens/favicon.ico"/>
+	<meta charset='utf-8'> 
+	<script>
+
+
+	function showUser(str) 
+	{
+	    if (str == "") {
+	        document.getElementById("txtHint").innerHTML = "";
+	        return;
+	    } else { 
+	        if (window.XMLHttpRequest) {
+	            // code for IE7+, Firefox, Chrome, Opera, Safari
+	            xmlhttp = new XMLHttpRequest();
+	        } else {
+	            // code for IE6, IE5
+	            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	        }
+	        xmlhttp.onreadystatechange = function() {
+	            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+	            }
+	        };
+	        xmlhttp.open("GET","getuser.php?idCliente="+str,true);
+	        xmlhttp.send();
+	    }
+	}
+
+	function showProd(str) {
+	    if (str == "") {
+	        document.getElementById("txtHint2").innerHTML = "";
+	        return;
+	    } else { 
+	        if (window.XMLHttpRequest) {
+	            // code for IE7+, Firefox, Chrome, Opera, Safari
+	            xmlhttp = new XMLHttpRequest();
+	        } else {
+	            // code for IE6, IE5
+	            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	        }
+	        xmlhttp.onreadystatechange = function() {
+	            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	                document.getElementById("txtHint2").innerHTML = xmlhttp.responseText;
+	            }
+	        };
+	        xmlhttp.open("GET","getprod.php?idP="+str,true);
+	        xmlhttp.send();
+	    }
+	}
+	</script>
+</head>
+<body>
+	<!-- ************ HEADER ************** -->
+	<?php include("header.php"); ?>
+	<!-- ***************** BODY *****************-->
+	<div class="container">
+
+	<table class="procura">
+	<form action="adicionarCompra.php" method="POST">
+		<tr bgcolor="#c1c1ff"> <td colspan="2"> <h2> Fazer uma nova compra </h2> </td> </tr>
+		 
+		<tr> 
+			<td> <p class="label"> Nome do Cliente: </p> </td> 
+			<td>
+<?php
+	$sql = "SELECT id_Cliente, nome
+			FROM clientes
+			ORDER BY id_Cliente ASC";
+
+	if ($smtp = $mysqli->prepare($sql))
+	{
+		$smtp->execute();						
+		$smtp->bind_result($idCliente, $nomeC);
+		
+		echo "<p class='label'> <select name='idCliente' class='selected' onchange='showUser(this.value)'>";
+		echo "<option value='$idCliente' selected> Seleccione um cliente </option>\n";
+		while ($smtp->fetch())
+		{	
+			echo "<option value='$idCliente'> $nomeC ($idCliente) </option>\n";						
+		}
+		echo "</select>";
+
+	}
+?>
+			</td>
+		</tr>
+		<tr> <td colspan="2"> <div id="txtHint"> </div> </td> </tr>
+		<tr> 
+			<td> <p class="label"> Descrição do Produto: </td>
+			<!--<td colspan="2">-->
+			<td>
+<?php
+	$sql_prod = "SELECT id_produto, nome_produto 
+			FROM produtos
+			ORDER BY id_produto ASC";
+
+	if ($smtp = $mysqli->prepare($sql_prod))
+	{
+		$smtp->execute();						
+		$smtp->bind_result($idP, $descricao);
+
+		echo "<p class='label'> <select name='idP' class='selected' onchange='showProd(this.value)'>";
+		echo "<option value='$idP' selected> Seleccione um produto </option>\n";
+		while ($smtp->fetch())
+		{		
+			echo "<option value='$idP'> $descricao ($idP)</option>\n";
+		}
+		echo "</select> </p> ";
+	}
+?>
+				</td>
+			</tr>
+			<tr> <td colspan="2"> <div id="txtHint2"> </div> </td> </tr>
+
+			<tr> <td> <p class="label"> Data da Compra: </p> </td> 	<td> <p> <input type="date" name="data" class="selected"> </p>  </td> </tr>
+		    <tr> <td> <p class="label"> Quantidade: </p> </td> 		<td> <p> <input type="text" name="quantidade" class="selected"> </p> </td> </tr>
+		    <tr> <td> <p class="label"> Preço Total: </p> </td> 	<td> <p> <input type="text" name="preco" class="selected"> </p> </td> </tr>
+
+			<tr bgcolor="#c1c1ff"> <td colspan="2"> <input type="submit" name="finalizar" class="button" value="Finalizar Compra" /></td></tr>
+		</form>
+		</table>
+	</div>
+	
+	<!-- ****************** FOOTER *************** -->
+	<?php 
+		include("footer.php"); 
+		mysqli_close($mysqli);
+	?>
+
+</body>
+</html>

@@ -1,13 +1,13 @@
 <?php 
+	require("../ligacaoBD.php");
+
 	session_start(); /* Starts the session */
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
-
-	require("../ligacaoBD.php");
 ?>
 <html>
 <head>
@@ -23,10 +23,10 @@
 	<div class="container">
 
 <?php
-	$idS = $_GET["idS"];
+	$id = $_GET["id"];
 	
-	$sql = "DELETE FROM servicos WHERE id_Servico = '$idS'";
-	if ($stmt = $con->prepare($sql)) 
+	$sql = "DELETE FROM servicos WHERE id_Servico = '$id'";
+	if ($stmt = $mysqli->prepare($sql)) 
 	{
 		$stmt->execute();
 		echo ("<h2> Serviço eliminado com sucesso! </h2>");
@@ -35,10 +35,10 @@
 	}
 	else
 	{ 
-		echo mysqli_error ($con);
+		echo mysqli_error ($mysqli);
 	}
 
-	$con->close(); //close connection
+	$mysqli->close(); //close connection
 ?>
 
 		</div>

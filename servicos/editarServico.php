@@ -1,39 +1,52 @@
 <?php 
+	require("../ligacaoBD.php");
 	session_start(); /* Starts the session */
 
 	if(!isset($_SESSION['user']))
 	{
-		header("location:login.php");
+		header("location:../login.php");
 		exit;
 	}
 
-	require("../ligacaoBD.php");
-
 	if(isset($_POST['editar']))
 	{
-		$idS = $_POST['id'];
-		$tipo = $_POST['tipo'];
+		$id = $_POST['id'];
+		$tipo_servico = $_POST['tipo_servico'];
 		$preco = $_POST['preco'];
-		$tempo = $_POST['tempo'];
+		$tempo_estimado = $_POST['tempo_estimado'];
 
-		$sql = mysqli_query($con, "UPDATE servicos SET id_Servico='$idS', tipoServico='$tipo', preco='$preco', tempoEstimado='$tempo' WHERE id_Servico='$idS'");
+		$sql = "UPDATE servicos 
+		SET id_servico='$id', tipo_servico='$tipo_servico', preco='$preco', tempo_estimado='$tempo_estimado' 
+		WHERE id_servico='$id'";
 
-		if ($stmt = $con->prepare($sql)) 
-		{
-			$stmt->execute();
-			$stmt->bind_result($idS, $tipo, $preco, $tempo);
-
-			while ($stmt->fetch()) 
+		//VERIFICAÇÃO DA INTRODUÇÃO DE VALORES NULOS NO FORMULARIO
+		/*	if($_POST['tipo_servico'] == '') 
 			{
-				echo "<script> alert('Serviço alterado com sucesso!\n'); </script>";
+				$tipo_servico = null;
+				echo "<br>Tipo de Serviço não pode estar vazio";
 			}
-		
-			$stmt->close();
+			else $tipo_servico = $_POST['tipo_servico'];
+
+			if($_POST['preco'] == '') 
+			{
+				$preco = null;
+				echo "<br>Preço não pode estar vazio";
+
+			}
+			else $preco = $_POST['preco'];*/
+
+		if ($mysqli->query($sql) === TRUE) 
+		{
+
+			echo "<script type=\"text/javascript\"> window.location=\"sucesso.php\"; </script>";
+		}
+		else
+		{
+			echo "<script type=\"text/javascript\"> alert(\"ERROR: " .$sql. '\n' .$mysqli->error."\"); </script>";
+
 		}
 	}
-	
-	mysqli_close($con);
-
+	mysqli_close($mysqli);
 ?>
 
 <html>
@@ -52,12 +65,17 @@
 	<form action="editarServico.php" method="POST">
 		<tr bgcolor="#c1c1ff"> <td colspan="3"> <h2> Editar um Serviço </h2> </td> </tr>
 	 	
-	 	<tr> <td> <p class="label"> ID Serviço: </p> </td> 		<td> <p> <input type="text" name="id" value="<?php $idS=$_GET['idS']; echo $idS; ?>" class="input"> </p> </td> </tr>
-    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo" value="<?php $tipo=$_GET['tipo']; echo $tipo; ?>" class="input"> </p> </td> </tr>
-       	<tr> <td> <p class="label"> Preço Serviço: </p> </td>	<td> <p> <input type="text" name="preco" value="<?php $preco=$_GET['preco']; echo $preco; ?>" class="input"> </p> </td> </tr>
-       	<tr> <td> <p class="label"> Tempo Estimado: </p> </td> 	<td> <p> <input type="text" name="tempo" value="<?php $tempo=$_GET['tempo']; echo $tempo; ?>" class="input"> </p> </td> </tr>
+	 	<tr> <td> <p class="label"> ID Serviço: </p> </td> 		<td> <p> <input type="text" name="id" value="<?php $id=$_GET['id']; echo $id; ?>" class="selected" readonly="readonly"> </p> </td> </tr>
+    	<tr> <td> <p class="label"> Tipo Serviço: </p> </td> 	<td> <p> <input type="text" name="tipo_servico" value="<?php $tipo_servico=$_GET['tipo_servico']; echo $tipo_servico; ?>" class="selected" required> </p> </td> </tr>
+       	<tr> <td> <p class="label"> Preço Serviço: (€) </p> </td>	<td> <p> <input type="text" name="preco" value="<?php $preco=$_GET['preco']; echo $preco; ?>" class="selected" required> </p> </td> </tr>
+       	<tr> <td> <p class="label"> Tempo Estimado: </p> </td> 	<td> <p> <input type="text" name="tempo_estimado" value="<?php $tempo_estimado=$_GET['tempo_estimado']; echo $tempo_estimado; ?>" class="selected"> </p> </td> </tr>
 		
-		<tr bgcolor="#c1c1ff"> <td colspan="3"> <input type="submit" name="editar" class="button" value="Editar"> </td> </tr>
+		<tr bgcolor="#c1c1ff"> 
+			<td colspan="3"> 
+				<input type="submit" name="editar" class="button" value="Editar"/>
+			</td>
+		</tr>
+
 	</form>
 	</table>
 	</div>
